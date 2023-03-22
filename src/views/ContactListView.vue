@@ -9,7 +9,7 @@ const contacts = [
     email: 'john@mail.com',
     phone: '555-555-5555',
     type: 'personal',
-    created_at: '2021-01-01'
+    created_at: '2020-01-01'
   },
   {
     id: 2,
@@ -25,7 +25,23 @@ const contacts = [
     email: 'henry@gmail.com',
     phone: '333-333-3333',
     type: 'professional',
+    created_at: '2023-01-01'
+  },
+  {
+    id: 4,
+    name: 'Sara Jackson',
+    email: 'sara@mail.com',
+    phone: '222-222-2222',
+    type: 'professional',
     created_at: '2021-01-01'
+  },
+  {
+    id: 5,
+    name: 'Silverhand',
+    email: 'silver@cp.net',
+    phone: '111-111-1111',
+    type: 'professional',
+    created_at: '2022-01-01'
   }
 ]
 
@@ -110,3 +126,17 @@ function filteredList() {
     </div>
   </div>
 </template>
+
+<style>
+.p-datatable-header {
+  background-color: #fff !important;
+  border-bottom: none !important;
+}
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: #fff !important;
+}
+.p-column-title {
+  font-weight: 500;
+  color: #94a3b8;
+}
+</style>
