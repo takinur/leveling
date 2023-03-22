@@ -40,7 +40,7 @@ const contacts = [
         :rowsPerPageOptions="[10, 20, 50]"
       >
         <TableColumn field="id" header="ID" style="width: 5%"></TableColumn>
-        <TableColumn field="name" header="Name" style="width: 30%"></TableColumn>
+        <TableColumn sortable field="name" header="Name" style="width: 30%"></TableColumn>
         <TableColumn field="phone" header="Telephone" style="width: 30%"></TableColumn>
         <TableColumn
           :class="`capitialize`"
