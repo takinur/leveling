@@ -20,9 +20,17 @@ const router = createRouter({
     {
       path: '/contacts',
       name: 'contacts',
-      component: () => import('../views/ContactListView.vue')
+      component: () => import('../views/ContactListView.vue'),
+      meta: {
+        title: 'Contacts'
+      }
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | Vue 3 Leveling App`
+  next()
 })
 
 export default router
