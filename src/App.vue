@@ -4,10 +4,10 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
+  <header class="w-full">
+    <div class="wrapper w-full">
+      <nav class="w-full">
+        <RouterLink class="text-green-500" to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/contacts">Contact List</RouterLink>
       </nav>
@@ -18,6 +18,10 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
+nav > a {
+  color: green;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
