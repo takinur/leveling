@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1D3557',
-        secondary: '#457B9D',
-        tertiary: '#A8DADC',
-        quaternary: '#F1FAEE',
-        quinary: '#E63946'
+        darkblue: '#1D3557', // dark blue
+        lightblue: '#457B9D', // light blue
+        lightteal: '#A8DADC', // light sky blue
+        primary: '#F1FAEE', // White/cream
+        darkred: '#E63946' // red
       }
     }
   },
