@@ -7,8 +7,9 @@ import Ripple from 'primevue/ripple'
 
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import ColumnGroup from 'primevue/columngroup' // optional
+import ColumnGroup from 'primevue/columngroup'
 import Row from 'primevue/row'
+import InputText from 'primevue/inputtext'
 
 import './assets/main.css'
 
@@ -28,5 +29,6 @@ app.component('DataTable', DataTable)
 app.component('TableColumn', Column)
 app.component('TableColumnGroup', ColumnGroup)
 app.component('TableRow', Row)
+app.component('InputText', InputText)
 
 app.mount('#app')
