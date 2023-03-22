@@ -29,7 +29,13 @@ const contacts = [
   <div class="w-full">
     <h1 class="text-gray-800">Contacts List</h1>
     <div class="w-full">
-      <DataTable :value="contacts" tableStyle="min-width: 50rem">
+      <DataTable
+        :value="contacts"
+        tableStyle="min-width: 50rem"
+        paginator
+        :rows="5"
+        :rowsPerPageOptions="[5, 10, 20, 50]"
+      >
         <TableColumn field="id" header="ID"></TableColumn>
         <TableColumn field="name" header="Name"></TableColumn>
         <TableColumn field="phone" header="Telephone"></TableColumn>
