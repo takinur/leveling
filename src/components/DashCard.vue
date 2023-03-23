@@ -5,7 +5,7 @@ const props = defineProps<{
   title: string
   progress: string
   progText: string
-  color: string
+  progColor: string
   value: string
   subtext: string
 }>()
@@ -39,7 +39,7 @@ const props = defineProps<{
         </div>
         <div class="w-1/2 border-2 border-red-500">
           <p class="mb-1 text-sm text-gray-600">{{ props.progText }}</p>
-          <MinProgress :progress="50" :color="'#fff'"  />
+          <MinProgress :progress="props.progress" :color="props.progColor" />
         </div>
       </div>
     </div>

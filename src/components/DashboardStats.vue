@@ -7,7 +7,7 @@ import DashCard from '@/components/DashCard.vue'
       title="On Going"
       progress="50"
       progText="128 Completed"
-      color="bg-green-200"
+      prog-color="bg-green-500"
       value="425"
       subtext="On Going Projects"
     >
@@ -29,7 +29,14 @@ import DashCard from '@/components/DashCard.vue'
       </template>
     </DashCard>
 
-    <DashCard>
+    <DashCard
+      title="Completed"
+      progress="75"
+      progText="128 Completed"
+      prog-color="bg-gray-500"
+      value="125"
+      subtext="Completed Projects"
+    >
       <template #icon>
         <div
           class="flex h-12 w-12 items-center justify-center rounded-full border border-orange-100 bg-orange-50"
@@ -48,12 +55,6 @@ import DashCard from '@/components/DashCard.vue'
               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
             />
           </svg>
-        </div>
-      </template>
-      <template #content>
-        <div class="ml-4">
-          <h2 class="font-semibold">1823 Users</h2>
-          <p class="mt-2 text-sm text-gray-500">Last checked 3 days ago</p>
         </div>
       </template>
     </DashCard>
