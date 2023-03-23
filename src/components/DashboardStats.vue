@@ -32,7 +32,7 @@ import DashCard from '@/components/DashCard.vue'
     <DashCard
       title="Completed"
       progress="75"
-      progText="128 Completed"
+      progText="40 Overdue"
       prog-color="bg-gray-500"
       value="125"
       subtext="Completed Projects"
@@ -58,7 +58,14 @@ import DashCard from '@/components/DashCard.vue'
         </div>
       </template>
     </DashCard>
-    <DashCard>
+    <DashCard
+      title="Commercial"
+      progress="30"
+      progText="120 Completed"
+      prog-color="bg-yellow-500"
+      value="274"
+      subtext="On Going Projects"
+    >
       <template #icon>
         <div
           class="flex h-12 w-12 items-center justify-center rounded-full border border-red-100 bg-red-50"
@@ -79,14 +86,15 @@ import DashCard from '@/components/DashCard.vue'
           </svg>
         </div>
       </template>
-      <template #content>
-        <div class="ml-4">
-          <h2 class="font-semibold">548 Posts</h2>
-          <p class="mt-2 text-sm text-gray-500">Last authored 1 day ago</p>
-        </div>
-      </template>
     </DashCard>
-    <DashCard>
+    <DashCard
+      title="Contacts"
+      progress="70"
+      progText="20 Recent"
+      prog-color="bg-teal-500"
+      value="118"
+      subtext="On Going Projects"
+    >
       <template #icon>
         <div
           class="flex h-12 w-12 items-center justify-center rounded-full border border-indigo-100 bg-indigo-50"
@@ -106,11 +114,6 @@ import DashCard from '@/components/DashCard.vue'
             />
           </svg>
         </div>
-      </template>
-
-      <template #content>
-        <h2 class="font-semibold">129 Comments</h2>
-        <p class="mt-2 text-sm text-gray-500">Last commented 8 days ago</p>
       </template>
     </DashCard>
   </div>
