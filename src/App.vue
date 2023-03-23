@@ -139,6 +139,7 @@ const navLinks = [
 <style scoped>
 nav a.router-link-exact-active {
   border-bottom: 2.5px solid #1d3557;
+  color: #1d3557;
 }
 nav a.router-link-exact-active:hover {
   background-color: transparent;
