@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DashboardStats from '@/components/DashboardStats.vue'
+import DashboardTasks from '@/components/DashboardTasks.vue'
 
 //Temp data
 const contacts = [
@@ -95,7 +96,9 @@ const contacts = [
           </DataTable>
         </div>
       </div>
-      <div class="md:w-2/5 mt-4 md:mt-0 rounded-md bg-white p-4 shadow-lg">2</div>
+      <div class="md:w-2/5 mt-4 md:mt-0 rounded-md bg-white p-4 shadow-lg">
+        <DashboardTasks />
+      </div>
     </div>
   </main>
 </template>
