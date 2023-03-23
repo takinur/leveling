@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div class="max-w-screen-2xl w-full body-wrapper">
+  <div class="max-w-screen-2xl w-full app-wrapper">
     <header class="w-full">
       <nav class="bg-white border-b-2 w-full flex relative justify-between items-center px-12 h-16">
         <!-- logo -->
@@ -24,7 +24,8 @@ import { RouterLink, RouterView } from 'vue-router'
               />
             </svg>
           </div>
-          <div class="navlinlks h-full ml-8 flex gap-12 pt-6 items-baseline">
+          <!-- Nav Links -->
+          <div class="navlinlks hidden h-full ml-8 md:flex gap-12 pt-6 items-baseline">
             <RouterLink
               to="/"
               class="h-full text-slate-600 font-semibold text-sm hover:text-slate-800"
