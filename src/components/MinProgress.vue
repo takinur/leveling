@@ -1,18 +1,18 @@
 <script setup lang="ts">
-//Percentages as props
-
 const props = defineProps<{
-  progress: number
+  progress: string
+  color: string
 }>()
 </script>
 
 <template>
-  <div class="relative h-8 w-full bg-gray-300 rounded-full overflow-hidden">
-    <div class="absolute top-0 left-0 h-full bg-green-500 rounded-full" style="width: 20%"></div>
-    <div class="absolute top-0 right-0 h-full w-0 overflow-hidden">
-      <div
-        class="bg-green-500 h-full w-8 transform rotate-45 origin-bottom-left absolute bottom-0"
-      ></div>
+  <div class="relative flex h-6 w-full overflow-hidden bg-gray-300">
+    <div
+      class="relative top-0 left-0 h-full rounded-r-md p-1 text-center text-sm text-blue-100"
+      :class="props.color"
+      :style="{ width: props.progress + '%' }"
+    >
+      {{ props.progress }}%
     </div>
   </div>
 </template>
