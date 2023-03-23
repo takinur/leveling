@@ -130,7 +130,7 @@ function filteredList() {
 <style>
 .p-datatable-header {
   background-color: #fff !important;
-  border-bottom: none !important;
+  border: none !important;
 }
 .p-datatable .p-datatable-thead > tr > th {
   background-color: #fff !important;
