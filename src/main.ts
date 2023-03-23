@@ -10,6 +10,7 @@ import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup'
 import Row from 'primevue/row'
 import InputText from 'primevue/inputtext'
+import Checkbox from 'primevue/checkbox'
 
 import './assets/main.css'
 
@@ -30,5 +31,6 @@ app.component('TableColumn', Column)
 app.component('TableColumnGroup', ColumnGroup)
 app.component('TableRow', Row)
 app.component('InputText', InputText)
+app.component('PrimeCheckbox', Checkbox)
 
 app.mount('#app')
