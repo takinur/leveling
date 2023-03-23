@@ -37,7 +37,7 @@ const props = defineProps<{
           {{ props.value }}
           <p class="mt-2 text-sm text-gray-500">{{ props.subtext }}</p>
         </div>
-        <div class="w-1/2 border-2 border-red-500">
+        <div class="w-1/2">
           <p class="mb-1 text-sm text-gray-600">{{ props.progText }}</p>
           <MinProgress :progress="props.progress" :color="props.progColor" />
         </div>
