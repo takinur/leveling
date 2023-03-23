@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import MinProgress from './MinProgress.vue'
+
+const props = defineProps<{
+  title: string
+  progress: string
+  progText: string
+  color: string
+  value: string
+  subtext: string
+}>()
+</script>
+
 <template>
   <div class="flex items-start rounded-xl bg-white p-4 shadow-lg">
     <slot name="icon"></slot>
@@ -17,8 +30,18 @@
         />
       </svg>
     </div>
-    <div class="ml-4">
-      <slot name="content"> </slot>
+    <div class="ml-4 w-full">
+      <h2 class="font-medium font-sans text-gray-700">{{ props.title }}</h2>
+      <div class="flex gap-2 mt-2 w-full">
+        <div class="text-lg w-1/2 font-bold">
+          {{ props.value }}
+          <p class="mt-2 text-sm text-gray-500">{{ props.subtext }}</p>
+        </div>
+        <div class="w-1/2 border-2 border-red-500">
+          <p class="mb-1 text-sm text-gray-600">{{ props.progText }}</p>
+          <MinProgress :progress="50" :color="'#fff'"  />
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -3,7 +3,14 @@ import DashCard from '@/components/DashCard.vue'
 </script>
 <template>
   <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    <DashCard>
+    <DashCard
+      title="On Going"
+      progress="50"
+      progText="128 Completed"
+      color="bg-green-200"
+      value="425"
+      subtext="On Going Projects"
+    >
       <template #icon>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -19,10 +26,6 @@ import DashCard from '@/components/DashCard.vue'
             d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
           />
         </svg>
-      </template>
-      <template #content>
-        <h2 class="font-semibold">574 Messages</h2>
-        <p class="mt-2 text-sm text-gray-500">Last opened 4 days ago</p>
       </template>
     </DashCard>
 
