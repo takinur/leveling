@@ -43,7 +43,7 @@ const navLinks = [
               v-for="link in navLinks"
               :key="link.name"
               :to="link.path"
-              class="text-gray-500 hover:text-gray-900"
+              class="h-full text-slate-600 font-semibold text-sm hover:text-slate-800"
               >{{ link.name }}</RouterLink
             >
           </div>
@@ -138,7 +138,7 @@ const navLinks = [
 
 <style scoped>
 nav a.router-link-exact-active {
-  border-bottom: 2px solid #1d3557;
+  border-bottom: 2.5px solid #1d3557;
 }
 nav a.router-link-exact-active:hover {
   background-color: transparent;
