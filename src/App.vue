@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+
+const navLinks = [
+  {
+    name: 'Dashboard',
+    path: '/'
+  },
+  {
+    name: 'Contacts',
+    path: '/contacts'
+  }
+]
 </script>
 
 <template>
-  <div class="max-w-screen-2xl w-full body-wrapper">
+  <div class="max-w-screen-2xl w-full app-wrapper">
     <header class="w-full">
-      <nav class="bg-white border-b-2 w-full flex relative justify-between items-center px-12 h-16">
+      <nav
+        class="bg-white border-b-2 w-full flex relative justify-between items-center px-4 md:px-12 h-16"
+      >
         <!-- logo -->
         <div class="inline-flex font-extrabold h-full">
           <div class="font-bold mr-4 flex items-center">
@@ -24,20 +37,18 @@ import { RouterLink, RouterView } from 'vue-router'
               />
             </svg>
           </div>
-          <div class="navlinlks h-full ml-8 flex gap-12 pt-6 items-baseline">
+          <!-- Nav Links -->
+          <div class="navlinlks hidden h-full ml-8 md:flex gap-12 pt-6 items-baseline">
             <RouterLink
-              to="/"
+              v-for="link in navLinks"
+              :key="link.name"
+              :to="link.path"
               class="h-full text-slate-600 font-semibold text-sm hover:text-slate-800"
-              >Dashboard</RouterLink
-            >
-            <RouterLink
-              to="/contacts"
-              class="h-full text-slate-600 font-semibold text-sm hover:text-slate-800"
-              >Contacts</RouterLink
+              >{{ link.name }}</RouterLink
             >
           </div>
         </div>
-        <!-- end logo -->
+        <!-- end logo & Nav Links -->
         <!-- User Actions -->
         <div class="flex-initial">
           <div class="flex justify-end items-center relative">
@@ -89,6 +100,31 @@ import { RouterLink, RouterView } from 'vue-router'
                 </button>
               </div>
             </div>
+            <div class="flex ml-4 items-center md:hidden">
+              <div class="block relative">
+                <button
+                  type="button"
+                  class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full relative"
+                >
+                  <div class="flex items-center h-5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <!-- end User Actions -->
@@ -102,7 +138,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style scoped>
 nav a.router-link-exact-active {
-  border-bottom: 2px solid #1d3557;
+  border-bottom: 2.5px solid #1d3557;
 }
 nav a.router-link-exact-active:hover {
   background-color: transparent;

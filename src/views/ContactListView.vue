@@ -61,8 +61,8 @@ function filteredList() {
 
 <template>
   <div class="w-full">
-    <h1 class="text-gray-800">Contacts List</h1>
-    <div class="w-full">
+    <h1 class="text-gray-700 my-4 pl-4 text-2xl font-semibold">Contacts List</h1>
+    <div class="w-full p-8 bg-white">
       <DataTable
         :value="filteredList()"
         tableStyle="min-width: 50rem"
@@ -130,7 +130,7 @@ function filteredList() {
 <style>
 .p-datatable-header {
   background-color: #fff !important;
-  border-bottom: none !important;
+  border: none !important;
 }
 .p-datatable .p-datatable-thead > tr > th {
   background-color: #fff !important;
