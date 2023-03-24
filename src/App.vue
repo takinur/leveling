@@ -142,13 +142,13 @@ const navLinks = [
         <transition name="slide-fade">
           <!-- navbar wrapper -->
           <div
-            class="navbar-wrapper fixed md:hidden top-0 left-0 h-full bg-white dark:bg-slate-900 z-30 w-64 shadow-lg p-5"
+            class="navbar-wrapper fixed md:hidden top-0 left-0 h-full bg-white z-30 w-64 shadow-lg p-5"
             v-show="showNav"
           >
-            <div class="close">
-              <button class="absolute top-0 right-0 mt-4 mr-4" @click="toggleNav">
+            <div class="close-nav relative">
+              <button class="absolute top-0 z-50 right-0 mt-1 mr-1" @click="toggleNav">
                 <svg
-                  class="w-6 h-6 dark:text-white"
+                  class="w-6 h-6"
                   fill="none"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -160,11 +160,15 @@ const navLinks = [
                 </svg>
               </button>
             </div>
-            <ul class="divide-y">
-              <li>
-                <a href="#intro" class="my-4 inline-block active font-bold mt-8 dark:text-white"
-                  >Introduction</a
+            <ul class="divide-y pt-10">
+              <li class="mobile-nav-item" v-for="item in navLinks" :key="item.path">
+                <router-link
+                  :to="item.path"
+                  class="block mt-2 py-2 text-sm font-medium text-gray-700"
+                  @click="toggleNav"
                 >
+                  {{ item.name }}
+                </router-link>
               </li>
             </ul>
           </div>
@@ -181,9 +185,15 @@ const navLinks = [
 nav a.router-link-exact-active {
   border-bottom: 2.5px solid #1d3557;
   color: #1d3557;
+  font-weight: 600;
 }
 nav a.router-link-exact-active:hover {
   background-color: transparent;
+}
+
+.mobile-nav-item a.router-link-exact-active {
+  color: #1d3557;
+  font-weight: 600;
 }
 
 /* nav a:first-of-type {
