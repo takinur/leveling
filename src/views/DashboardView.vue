@@ -1,6 +1,40 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import DashboardStats from '@/components/DashboardStats.vue'
 import DashboardTasks from '@/components/DashboardTasks.vue'
+
+//Chart data
+onMounted(() => {
+  chartData.value = setChartData()
+})
+
+const chartData = ref()
+const chartOptions = ref({
+  cutout: '60%'
+})
+
+const setChartData = () => {
+  const documentStyle = getComputedStyle(document.body)
+
+  return {
+    labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [540, 325, 702],
+        backgroundColor: [
+          documentStyle.getPropertyValue('--blue-500'),
+          documentStyle.getPropertyValue('--yellow-500'),
+          documentStyle.getPropertyValue('--green-500')
+        ],
+        hoverBackgroundColor: [
+          documentStyle.getPropertyValue('--blue-400'),
+          documentStyle.getPropertyValue('--yellow-400'),
+          documentStyle.getPropertyValue('--green-400')
+        ]
+      }
+    ]
+  }
+}
 
 //Temp data
 const contacts = [
@@ -45,11 +79,43 @@ const contacts = [
     created_at: '2022-01-01'
   }
 ]
+
+const clientGroups = [
+  {
+    id: 1,
+    name: 'Group 1',
+    members: ['John', 'Karen', 'Henry', 'Sara', 'Silverhand']
+  },
+  {
+    id: 2,
+    name: 'Group 2',
+    members: ['Karen', 'Henry', 'Sara', 'Silverhand']
+  },
+  {
+    id: 3,
+    name: 'Group 3',
+    members: ['Henry', 'Sara', 'Silverhand', 'V']
+  },
+  {
+    id: 4,
+    name: 'Group 4',
+    members: ['Sara', 'Silverhand', 'Trevor']
+  },
+  {
+    id: 5,
+    name: 'Group 5',
+    members: ['Silverhand', 'John', 'Karen', 'Henry', 'Sara']
+  },
+  {
+    id: 6,
+    name: 'Group 6',
+    members: ['John', 'Karen', 'Henry', 'Sara', 'Silverhand']
+  }
+]
 </script>
 
 <template>
   <main class="w-full bg-primary p-6">
-    <h1>Hello from Dashboard Page</h1>
     <DashboardStats />
     <div class="md:flex gap-4 mt-8 w-full">
       <div class="md:w-3/5 rounded-md bg-white p-4 shadow-lg">
@@ -98,6 +164,56 @@ const contacts = [
       </div>
       <div class="md:w-2/5 mt-4 md:mt-0 rounded-md bg-white p-4 shadow-lg">
         <DashboardTasks />
+      </div>
+    </div>
+    <div class="md:flex gap-4 mt-4 w-full">
+      <div class="md:w-2/5 mt-4 md:mt-0 flex justify-center rounded-md bg-white p-4 shadow-lg">
+        <PrimeChart
+          type="doughnut"
+          :data="chartData"
+          :options="chartOptions"
+          class="w-full md:w-30rem"
+        />
+      </div>
+      <div class="md:w-3/5 rounded-md bg-white p-4 shadow-lg md:mt-0 mt-4">
+        <div class="card card-w-title global-sales p-fluid">
+          <h5 class="font-semibold text-gray-800 mb-4">Client Groups</h5>
+          <DataTable
+            :value="clientGroups"
+            responsiveLayout="scroll"
+            dataKey="id"
+            :rows="5"
+            style="margin-bottom: 20px"
+            :paginator="true"
+          >
+            <TableColumn field="id" header="ID" :sortable="true">
+              <template #body="slotProps">
+                <span class="p-column-title">ID</span>
+                {{ slotProps.data.id }}
+              </template>
+            </TableColumn>
+            <TableColumn field="name" header="Name" :sortable="true">
+              <template #body="slotProps">
+                <span class="p-column-title">Name</span>
+                {{ slotProps.data.name }}
+              </template>
+            </TableColumn>
+
+            <TableColumn field="members" header="Members" :sortable="false">
+              <template #body="slotProps">
+                <div class="grid grid-flow-col gap-2 justify-start">
+                  <span
+                    class="bg-slate-200 rounded-full px-2"
+                    v-for="member in slotProps.data.members"
+                    :key="member"
+                  >
+                    {{ member }}
+                  </span>
+                </div>
+              </template>
+            </TableColumn>
+          </DataTable>
+        </div>
       </div>
     </div>
   </main>
