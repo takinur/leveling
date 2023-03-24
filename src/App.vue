@@ -30,6 +30,11 @@ const navLinks = [
         <div class="inline-flex font-extrabold h-full">
           <div class="font-bold mr-4 flex items-center">
             <img src="@/assets/logo.png" alt="logo" class="h-12" />
+            <h4
+              class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 font-extrabold text-xl ml-2"
+            >
+              Logo
+            </h4>
           </div>
           <!-- Nav Links -->
           <div class="navlinlks hidden h-full ml-8 md:flex gap-12 pt-6 items-baseline">
