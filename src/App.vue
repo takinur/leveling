@@ -146,7 +146,7 @@ const subItems = ref([
   }
 ])
 
-const toggleSubmenu = (event) => {
+const toggleSubmenu = (event: Event) => {
   subMenu.value.toggle(event)
 }
 </script>
