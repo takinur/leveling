@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+
+const showNav = ref(false)
+
+const toggleNav = () => {
+  showNav.value = !showNav.value
+}
 
 const navLinks = [
   {
@@ -100,11 +107,12 @@ const navLinks = [
                 </button>
               </div>
             </div>
-            <div class="flex ml-4 items-center md:hidden">
+            <div class="flex ml-4 items-center mdd:hidden">
               <div class="block relative">
                 <button
+                  @click="toggleNav"
                   type="button"
-                  class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full relative"
+                  class="inline-block py-2 px-3 hover:bg-gray-200 relative"
                 >
                   <div class="flex items-center h-5">
                     <svg
@@ -129,6 +137,39 @@ const navLinks = [
         </div>
         <!-- end User Actions -->
       </nav>
+      <!-- mobile navbar -->
+      <div class="mobile-navbar z-[999]">
+        <transition name="slide-fade">
+          <!-- navbar wrapper -->
+          <div
+            class="navbar-wrapper fixed md:hidden top-0 left-0 h-full bg-white dark:bg-slate-900 z-30 w-64 shadow-lg p-5"
+            v-show="showNav"
+          >
+            <div class="close">
+              <button class="absolute top-0 right-0 mt-4 mr-4" @click="toggleNav">
+                <svg
+                  class="w-6 h-6 dark:text-white"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <ul class="divide-y">
+              <li>
+                <a href="#intro" class="my-4 inline-block active font-bold mt-8 dark:text-white"
+                  >Introduction</a
+                >
+              </li>
+            </ul>
+          </div>
+        </transition>
+      </div>
     </header>
     <div class="contents-wrapper">
       <RouterView />
@@ -148,4 +189,20 @@ nav a.router-link-exact-active:hover {
 /* nav a:first-of-type {
   border: 0;
 } */
+
+/* Mobile Nav Animation */
+.slide-fade-enter-active {
+  transition: all 0.5s ease 0s;
+  -webkit-transition: all 0.5s ease 0s;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s ease 0s;
+  transform: translate3d(0px, 0px, 0px);
+  -webkit-transition: all 0.5s ease 0s;
+}
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translate3d(-100%, 0px, 0px);
+  opacity: 0;
+}
 </style>
