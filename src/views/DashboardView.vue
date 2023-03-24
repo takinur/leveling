@@ -49,7 +49,6 @@ const contacts = [
 
 <template>
   <main class="w-full bg-primary p-6">
-    <h1>Hello from Dashboard Page</h1>
     <DashboardStats />
     <div class="md:flex gap-4 mt-8 w-full">
       <div class="md:w-3/5 rounded-md bg-white p-4 shadow-lg">
