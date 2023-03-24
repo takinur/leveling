@@ -9,7 +9,7 @@ const contacts = [
     email: 'john@mail.com',
     phone: '555-555-5555',
     type: 'personal',
-    created_at: '2020-01-01'
+    created_at: '2020-Jan-01'
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const contacts = [
     email: 'karen@mail.com',
     phone: '444-444-4444',
     type: 'personal',
-    created_at: '2021-01-01'
+    created_at: '2021-Mar-07'
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const contacts = [
     email: 'henry@gmail.com',
     phone: '333-333-3333',
     type: 'professional',
-    created_at: '2023-01-01'
+    created_at: '2023-May-09'
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ const contacts = [
     email: 'sara@mail.com',
     phone: '222-222-2222',
     type: 'professional',
-    created_at: '2021-01-01'
+    created_at: '2021-Apr-14'
   },
   {
     id: 5,
@@ -41,7 +41,7 @@ const contacts = [
     email: 'silver@cp.net',
     phone: '111-111-1111',
     type: 'professional',
-    created_at: '2022-01-01'
+    created_at: '2022-Dec-30'
   }
 ]
 
@@ -92,7 +92,7 @@ function filteredList() {
           <div class="md:flex justify-between">
             <div class="pt-2 relative text-gray-600">
               <input
-                class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                class="border-2 border-gray-300 w-full md:w- bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search"
@@ -138,7 +138,12 @@ function filteredList() {
           header="Type"
           style="width: 20%"
         ></TableColumn>
-        <TableColumn field="created_at" header="Date Added" style="width: 30%"></TableColumn>
+        <TableColumn
+          class="text-sm"
+          field="created_at"
+          header="Date Added"
+          style="width: 30%"
+        ></TableColumn>
       </DataTable>
     </div>
   </div>
