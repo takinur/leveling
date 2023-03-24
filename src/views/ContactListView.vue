@@ -89,7 +89,7 @@ function filteredList() {
         :rowsPerPageOptions="[10, 20, 50]"
       >
         <template #header>
-          <div class="flex justify-between">
+          <div class="md:flex justify-between">
             <div class="pt-2 relative text-gray-600">
               <input
                 class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
@@ -119,7 +119,7 @@ function filteredList() {
                 </svg>
               </div>
             </div>
-            <div class="w-48">
+            <div class="w-48 mt-4 md:mt-0">
               <button
                 class="block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkblue rounded shadow ripple hover:shadow-lg hover:bg-opacity-80 focus:outline-none"
               >
