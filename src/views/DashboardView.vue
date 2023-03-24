@@ -71,6 +71,11 @@ const clientGroups = [
     id: 5,
     name: 'Group 5',
     members: ['Silverhand', 'John', 'Karen', 'Henry', 'Sara']
+  },
+  {
+    id: 6,
+    name: 'Group 6',
+    members: ['John', 'Karen', 'Henry', 'Sara', 'Silverhand']
   }
 ]
 </script>
@@ -127,9 +132,60 @@ const clientGroups = [
         <DashboardTasks />
       </div>
     </div>
-    <div class="md:flex gap-4 mt-8 w-full">
+    <div class="md:flex gap-4 mt-4 w-full">
       <div class="md:w-2/5 mt-4 md:mt-0 rounded-md bg-white p-4 shadow-lg">
-        <DashboardTasks />
+        <div class="user-detail">
+          <ul>
+            <li class="clearfix">
+              <i class="pi pi-list"></i>
+              <span class="project-title">Tasks</span>
+              <span class="project-detail">3 open</span>
+              <div class="project-progressbar">
+                <div class="project-progressbar-value" style="width: 50%"></div>
+              </div>
+            </li>
+            <li class="clearfix">
+              <i class="pi pi-dollar"></i>
+              <span class="project-title">Revenue</span>
+              <span class="project-detail">+20%</span>
+              <div class="project-progressbar">
+                <div class="project-progressbar-value" style="width: 20%"></div>
+              </div>
+            </li>
+            <li class="clearfix">
+              <i class="pi pi-money-bill"></i>
+              <span class="project-title">Payments</span>
+              <span class="project-detail">24 new</span>
+              <div class="project-progressbar">
+                <div class="project-progressbar-value" style="width: 65%"></div>
+              </div>
+            </li>
+            <li class="clearfix">
+              <i class="pi pi-users"></i>
+              <span class="project-title">Clients</span>
+              <span class="project-detail">+80%</span>
+              <div class="project-progressbar">
+                <div class="project-progressbar-value" style="width: 80%"></div>
+              </div>
+            </li>
+            <li class="clearfix">
+              <i class="pi pi-money-bill"></i>
+              <span class="project-title">Sales</span>
+              <span class="project-detail">+45</span>
+              <div class="project-progressbar">
+                <div class="project-progressbar-value" style="width: 45%"></div>
+              </div>
+            </li>
+            <li class="clearfix">
+              <i class="pi pi-chart-bar"></i>
+              <span class="project-title">Performance</span>
+              <span class="project-detail">+75</span>
+              <div class="project-progressbar">
+                <div class="project-progressbar-value" style="width: 75%"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="md:w-3/5 rounded-md bg-white p-4 shadow-lg md:mt-0 mt-4">
         <div class="card card-w-title global-sales p-fluid">
