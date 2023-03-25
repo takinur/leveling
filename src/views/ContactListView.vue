@@ -8,7 +8,7 @@ const contacts = [
     name: 'John Doe',
     email: 'john@mail.com',
     phone: '555-555-5555',
-    type: 'personal',
+    type: 'External',
     created_at: '2020-Jan-01'
   },
   {
@@ -16,7 +16,7 @@ const contacts = [
     name: 'Karen Williams',
     email: 'karen@mail.com',
     phone: '444-444-4444',
-    type: 'personal',
+    type: 'Internal',
     created_at: '2021-Mar-07'
   },
   {
@@ -24,7 +24,7 @@ const contacts = [
     name: 'Henry Johnson',
     email: 'henry@gmail.com',
     phone: '333-333-3333',
-    type: 'professional',
+    type: 'External',
     created_at: '2023-May-09'
   },
   {
@@ -32,7 +32,7 @@ const contacts = [
     name: 'Sara Jackson',
     email: 'sara@mail.com',
     phone: '222-222-2222',
-    type: 'professional',
+    type: 'Google',
     created_at: '2021-Apr-14'
   },
   {
@@ -40,7 +40,7 @@ const contacts = [
     name: 'Silverhand',
     email: 'silver@cp.net',
     phone: '111-111-1111',
-    type: 'professional',
+    type: 'Facebook',
     created_at: '2022-Dec-30'
   }
 ]
@@ -92,7 +92,7 @@ function filteredList() {
           <div class="md:flex justify-between">
             <div class="pt-2 relative text-gray-600">
               <input
-                class="border-2 border-gray-300 w-full md:w- bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                class="border-2 border-gray-300 w-full bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search"
