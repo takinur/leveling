@@ -71,7 +71,8 @@ function deleteContact(event: Event, id: number) {
     acceptIcon: 'pi pi-check',
     rejectIcon: 'pi pi-times',
     acceptClass: 'p-button-danger',
-    target: event.currentTarget,
+    target: event.currentTarget as HTMLElement,
+
     accept: () => {
       contacts.value.splice(
         contacts.value.findIndex((contact) => contact.id === id),
