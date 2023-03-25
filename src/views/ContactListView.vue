@@ -216,7 +216,7 @@ function deleteContact(event: Event, id: number) {
               <div class="delete-wrapper">
                 <button
                   @click="deleteContact($event, slotProps.data.id)"
-                  class="flex items-center justify-center w-8 h-8 mr-1 text-darkred transition-colors duration-150 cursor-pointer hover:bg-opacity-80 focus:outline-none"
+                  class="flex items-center justify-center w-8 h-8 mr-1 text-darkred transition-colors duration-150 cursor-pointer hover:text-gray-500 focus:outline-none"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
