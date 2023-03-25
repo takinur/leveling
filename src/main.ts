@@ -13,6 +13,7 @@ import InputText from 'primevue/inputtext'
 import Checkbox from 'primevue/checkbox'
 import TieredMenu from 'primevue/tieredmenu'
 import Chart from 'primevue/chart'
+import ConfirmPopup from 'primevue/confirmpopup'
 
 import './assets/main.css'
 
@@ -36,5 +37,6 @@ app.component('InputText', InputText)
 app.component('PrimeCheckbox', Checkbox)
 app.component('TieredMenu', TieredMenu)
 app.component('PrimeChart', Chart)
+app.component('ConfirmPopup', ConfirmPopup)
 
 app.mount('#app')
