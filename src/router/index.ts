@@ -19,6 +19,15 @@ const router = createRouter({
       meta: {
         title: 'Contacts'
       }
+    },
+    //Contact Edit View Route
+    {
+      path: '/contacts/:id/edit',
+      name: 'contact-edit',
+      component: () => import('../views/ContactEdit.vue'),
+      meta: {
+        title: 'Edit Contact'
+      }
     }
   ]
 })
