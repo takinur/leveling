@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 //Temp data
 const contacts = [
@@ -165,7 +166,8 @@ function filteredList() {
                   />
                 </svg>
               </button>
-              <button
+              <RouterLink
+                :to="{ name: 'contact-edit', params: { id: slotProps.data.id } }"
                 class="flex items-center justify-center w-8 h-8 mr-1 text-darkblue transition-colors duration-150 cursor-pointer hover:opacity-90 focus:outline-none"
               >
                 <svg
@@ -182,7 +184,7 @@ function filteredList() {
                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                   />
                 </svg>
-              </button>
+              </RouterLink>
               <button
                 class="flex items-center justify-center w-8 h-8 mr-1 text-darkred transition-colors duration-150 cursor-pointer hover:bg-opacity-80 focus:outline-none"
               >
