@@ -6,7 +6,7 @@ import { useConfirm } from 'primevue/useconfirm'
 const confirm = useConfirm()
 
 //Temp data
-const contacts = [
+const contacts = ref([
   {
     id: 1,
     name: 'John Doe',
@@ -47,12 +47,12 @@ const contacts = [
     type: 'Facebook',
     created_at: '2022-Dec-30'
   }
-]
+])
 
 let searchInput = ref('')
 
 function filteredList() {
-  return contacts.filter((contact) => {
+  return contacts.value.filter((contact) => {
     //Name, Email and Phone
     return (
       contact.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
@@ -63,19 +63,21 @@ function filteredList() {
 }
 
 //Delete Contact
-function deleteContact(id: number) {
+function deleteContact(event: Event, id: number) {
   confirm.require({
     message: 'Are you sure you want to delete this contact?',
     header: 'Delete Contact',
     icon: 'pi pi-exclamation-triangle',
     acceptIcon: 'pi pi-check',
     rejectIcon: 'pi pi-times',
+    acceptClass: 'p-button-danger',
+    target: event.currentTarget,
     accept: () => {
-      contacts.splice(
-        contacts.findIndex((contact) => contact.id === id),
+      contacts.value.splice(
+        contacts.value.findIndex((contact) => contact.id === id),
         1
       )
-      console.log('Deleted')
+      console.log('Deleted', id)
     },
     reject: () => {
       //Do nothing
@@ -212,7 +214,7 @@ function deleteContact(id: number) {
               </RouterLink>
               <div class="delete-wrapper">
                 <button
-                  @click="deleteContact(slotProps.data.id)"
+                  @click="deleteContact($event, slotProps.data.id)"
                   class="flex items-center justify-center w-8 h-8 mr-1 text-darkred transition-colors duration-150 cursor-pointer hover:bg-opacity-80 focus:outline-none"
                 >
                   <svg
@@ -230,11 +232,11 @@ function deleteContact(id: number) {
                     />
                   </svg>
                 </button>
-                <ConfirmPopup> // ConfirmPopup content </ConfirmPopup>
               </div>
             </div>
           </template>
         </TableColumn>
+        <ConfirmPopup></ConfirmPopup>
       </DataTable>
     </div>
   </div>
