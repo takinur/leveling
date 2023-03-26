@@ -93,6 +93,15 @@ const contacts = ref([
     created_at: '2022-Dec-30'
   }
 ])
+
+//Form data
+const contactData = ref({
+  id: 0,
+  name: '',
+  email: '',
+  phone: '',
+  created_at: ''
+})
 </script>
 
 <template>
@@ -123,10 +132,25 @@ const contacts = ref([
       </div>
     </div>
 
-    <div class="w-full p-8 bg-white grid grid-cols-">
-      <div class="sidenav">HEre is the nav</div>
-      <div>Main Form</div>
-      <div>Right Side</div>
+    <div class="w-full p-8 bg-white grid grid-cols-5">
+      <div class="sidenav">
+        <h4 class="text-gray-600 text-base font-semibold">Contact Details</h4>
+      </div>
+      <form class="col-span-2 pr-20">
+        <div class="input-wrapper grid grid-flow-row">
+          <label class="text-gray-600 font-medium" for="name">Name</label>
+          <InputText id="name" v-model="contactData.name" aria-describedby="name-help" />
+        </div>
+        <div class="input-wrapper grid grid-flow-row mt-4">
+          <label class="text-gray-600 font-medium" for="email">Email</label>
+          <InputText id="email" v-model="contactData.email" aria-describedby="email-help" />
+        </div>
+        <div class="input-wrapper grid grid-flow-row mt-4">
+          <label class="text-gray-600 font-medium" for="phone">Phone</label>
+          <InputText id="phone" v-model="contactData.phone" aria-describedby="phone-help" />
+        </div>
+      </form>
+      <div class="col-span-2">Right Side</div>
     </div>
   </div>
 </template>
