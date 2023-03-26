@@ -14,7 +14,7 @@ const menuItems = ref([
     label: 'Options',
     items: [
       {
-        label: 'Update',
+        label: 'Refresh',
         icon: 'pi pi-refresh',
         command: () => {
           // toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
@@ -49,6 +49,50 @@ const menuItems = ref([
 const toggleActions = (event: Event) => {
   actionMenu.value.toggle(event)
 }
+
+//Temp data
+const contacts = ref([
+  {
+    id: 1,
+    name: 'John Doe',
+    email: 'john@mail.com',
+    phone: '555-555-5555',
+    type: 'External',
+    created_at: '2020-Jan-01'
+  },
+  {
+    id: 2,
+    name: 'Karen Williams',
+    email: 'karen@mail.com',
+    phone: '444-444-4444',
+    type: 'Internal',
+    created_at: '2021-Mar-07'
+  },
+  {
+    id: 3,
+    name: 'Henry Johnson',
+    email: 'henry@gmail.com',
+    phone: '333-333-3333',
+    type: 'External',
+    created_at: '2023-May-09'
+  },
+  {
+    id: 4,
+    name: 'Sara Jackson',
+    email: 'sara@mail.com',
+    phone: '222-222-2222',
+    type: 'Google',
+    created_at: '2021-Apr-14'
+  },
+  {
+    id: 5,
+    name: 'Silverhand',
+    email: 'silver@cp.net',
+    phone: '111-111-1111',
+    type: 'Facebook',
+    created_at: '2022-Dec-30'
+  }
+])
 </script>
 
 <template>
@@ -60,7 +104,7 @@ const toggleActions = (event: Event) => {
         </RouterLink>
         <h1 class="mt-1">Edit Contact</h1>
       </div>
-      <div class="grid grid-flow-col items-center gap-4 px-8">
+      <div class="grid grid-flow-col mb-4 md:mb-0 items-center gap-4 px-8">
         <button
           label="Toggle"
           @click="toggleActions"
@@ -79,6 +123,10 @@ const toggleActions = (event: Event) => {
       </div>
     </div>
 
-    <div class="w-full p-8 bg-white">Form Goes Here</div>
+    <div class="w-full p-8 bg-white grid grid-cols-">
+      <div class="sidenav">HEre is the nav</div>
+      <div>Main Form</div>
+      <div>Right Side</div>
+    </div>
   </div>
 </template>
