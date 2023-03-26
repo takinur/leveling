@@ -57,7 +57,6 @@ const contacts = ref([
     name: 'John Doe',
     email: 'john@mail.com',
     phone: '555-555-5555',
-    type: 'External',
     created_at: '2020-Jan-01'
   },
   {
@@ -65,7 +64,6 @@ const contacts = ref([
     name: 'Karen Williams',
     email: 'karen@mail.com',
     phone: '444-444-4444',
-    type: 'Internal',
     created_at: '2021-Mar-07'
   },
   {
@@ -73,7 +71,6 @@ const contacts = ref([
     name: 'Henry Johnson',
     email: 'henry@gmail.com',
     phone: '333-333-3333',
-    type: 'External',
     created_at: '2023-May-09'
   },
   {
@@ -81,7 +78,6 @@ const contacts = ref([
     name: 'Sara Jackson',
     email: 'sara@mail.com',
     phone: '222-222-2222',
-    type: 'Google',
     created_at: '2021-Apr-14'
   },
   {
@@ -89,7 +85,6 @@ const contacts = ref([
     name: 'Silverhand',
     email: 'silver@cp.net',
     phone: '111-111-1111',
-    type: 'Facebook',
     created_at: '2022-Dec-30'
   }
 ])
@@ -132,7 +127,7 @@ const contactData = ref({
       </div>
     </div>
 
-    <div class="w-full p-8 bg-white grid grid-cols-5">
+    <div class="w-full p-8 bg-white min-h-screen grid grid-cols-5">
       <div class="sidenav">
         <h4 class="text-gray-600 text-base font-semibold">Contact Details</h4>
       </div>
@@ -150,7 +145,31 @@ const contactData = ref({
           <InputText id="phone" v-model="contactData.phone" aria-describedby="phone-help" />
         </div>
       </form>
-      <div class="col-span-2">Right Side</div>
+      <div class="col-span-2 flex justify-center pt-4">
+        <!-- Insight Card with Icon to show few Keywords -->
+        <div class="w-64 h-52 rounded shadow-lg bg-darkblue">
+          <div class="flex">
+            <svg class="w-12 h-12 text-lightblue m-4" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12zm-2-6a2 2 0 114 0 2 2 0 01-4 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span class="text-base text-primary mt-6"> Insights </span>
+          </div>
+          <div class="flex justify-center mt-4">
+            <div class="flex flex-col">
+              <span class="text-sm text-primary">Created</span>
+              <span class="text-sm text-primary">Last Updated</span>
+            </div>
+            <div class="flex flex-col ml-4">
+              <span class="text-sm text-lightblue">2020-Jan-01</span>
+              <span class="text-sm text-lightblue">2021-Mar-07</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
