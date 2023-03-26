@@ -90,7 +90,7 @@ function deleteContact(event: Event, id: number) {
 
 <template>
   <div class="w-full">
-    <div class="text-gray-700 flex my-4 pl-8 text-4xl font-semibold">
+    <div class="text-gray-700 flex my-4 p-8 text-4xl font-semibold">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
