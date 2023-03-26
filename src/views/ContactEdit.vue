@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '@/router'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -97,6 +98,21 @@ const contactData = ref({
   phone: '',
   created_at: ''
 })
+
+//Set form data on load
+contacts.value.forEach((contact) => {
+  if (contact.id === Number(id)) {
+    contactData.value = contact
+  }
+})
+
+//Update form data
+const updateContact = () => {
+  console.log('Update Contact:', contactData.value)
+  //TODO: Update contact in DB
+  //Redirect to contacts page
+  router.push('/contacts')
+}
 </script>
 
 <template>
@@ -120,6 +136,7 @@ const contactData = ref({
         </button>
         <PrimeMenu ref="actionMenu" id="overlay_menu" :model="menuItems" :popup="true" />
         <button
+          @click="updateContact"
           class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-green-500 rounded shadow ripple hover:shadow-lg hover:bg-green-600 focus:outline-none"
         >
           Save
