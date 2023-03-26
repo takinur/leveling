@@ -127,11 +127,11 @@ const contactData = ref({
       </div>
     </div>
 
-    <div class="w-full p-8 bg-white min-h-screen grid grid-cols-5">
+    <div class="w-full p-8 bg-white min-h-screen grid grid-flow-row md:grid-cols-5">
       <div class="sidenav">
         <h4 class="text-gray-600 text-base font-semibold">Contact Details</h4>
       </div>
-      <form class="col-span-2 pr-20">
+      <form class="col-span-2 md:pr-20">
         <div class="input-wrapper grid grid-flow-row">
           <label class="text-gray-600 font-medium" for="name">Name</label>
           <InputText id="name" v-model="contactData.name" aria-describedby="name-help" />
