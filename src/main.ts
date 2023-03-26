@@ -5,6 +5,8 @@ import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
 import Ripple from 'primevue/ripple'
 import ConfirmationService from 'primevue/confirmationservice'
+import Toast from 'primevue/toast'
+import ToastService from 'primevue/toastservice'
 
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -28,6 +30,7 @@ const app = createApp(App)
 app.use(router)
 app.use(PrimeVue, { ripple: true })
 app.use(ConfirmationService)
+app.use(ToastService)
 
 app.directive('ripple', Ripple)
 
@@ -42,5 +45,6 @@ app.component('TieredMenu', TieredMenu)
 app.component('PrimeChart', Chart)
 app.component('ConfirmPopup', ConfirmPopup)
 app.component('PrimeMenu', Menu)
+app.component('ToastVue', Toast)
 
 app.mount('#app')
