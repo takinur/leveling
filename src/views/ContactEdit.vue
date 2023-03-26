@@ -2,10 +2,11 @@
 import router from '@/router'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
 
 //Contact ID from URL
 const { id } = useRoute().params
-
+const toast = useToast()
 console.log('Edit This id:', id)
 
 //More actions menu
@@ -131,11 +132,19 @@ const updateContact = () => {
       errorMessage.value.email = ''
       errorMessage.value.phone = ''
   }
-
   console.log('Update Contact:', contactData.value)
   //TODO: Update contact in DB
-  //Redirect to contacts page
-  router.push('/contacts')
+
+  toast.add({
+    severity: 'success',
+    summary: 'Updated',
+    detail: 'Contact Updated',
+    life: 3000
+  })
+  //Redirect to contacts page after 3 seconds
+  setTimeout(() => {
+    router.push('/contacts')
+  }, 3000)
 }
 </script>
 
@@ -230,5 +239,6 @@ const updateContact = () => {
         </div>
       </div>
     </div>
+    <ToastVue />
   </div>
 </template>
