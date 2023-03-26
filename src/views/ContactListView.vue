@@ -1,54 +1,58 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useConfirm } from 'primevue/useconfirm'
+
+const confirm = useConfirm()
 
 //Temp data
-const contacts = [
+const contacts = ref([
   {
     id: 1,
     name: 'John Doe',
     email: 'john@mail.com',
     phone: '555-555-5555',
-    type: 'personal',
-    created_at: '2020-01-01'
+    type: 'External',
+    created_at: '2020-Jan-01'
   },
   {
     id: 2,
     name: 'Karen Williams',
     email: 'karen@mail.com',
     phone: '444-444-4444',
-    type: 'personal',
-    created_at: '2021-01-01'
+    type: 'Internal',
+    created_at: '2021-Mar-07'
   },
   {
     id: 3,
     name: 'Henry Johnson',
     email: 'henry@gmail.com',
     phone: '333-333-3333',
-    type: 'professional',
-    created_at: '2023-01-01'
+    type: 'External',
+    created_at: '2023-May-09'
   },
   {
     id: 4,
     name: 'Sara Jackson',
     email: 'sara@mail.com',
     phone: '222-222-2222',
-    type: 'professional',
-    created_at: '2021-01-01'
+    type: 'Google',
+    created_at: '2021-Apr-14'
   },
   {
     id: 5,
     name: 'Silverhand',
     email: 'silver@cp.net',
     phone: '111-111-1111',
-    type: 'professional',
-    created_at: '2022-01-01'
+    type: 'Facebook',
+    created_at: '2022-Dec-30'
   }
-]
+])
 
 let searchInput = ref('')
 
 function filteredList() {
-  return contacts.filter((contact) => {
+  return contacts.value.filter((contact) => {
     //Name, Email and Phone
     return (
       contact.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
@@ -57,11 +61,36 @@ function filteredList() {
     )
   })
 }
+
+//Delete Contact
+function deleteContact(event: Event, id: number) {
+  confirm.require({
+    message: 'Are you sure you want to delete this contact?',
+    header: 'Delete Contact',
+    icon: 'pi pi-exclamation-triangle',
+    acceptIcon: 'pi pi-check',
+    rejectIcon: 'pi pi-times',
+    acceptClass: 'p-button-danger',
+    target: event.currentTarget as HTMLElement,
+
+    accept: () => {
+      contacts.value.splice(
+        contacts.value.findIndex((contact) => contact.id === id),
+        1
+      )
+      console.log('Deleted', id)
+    },
+    reject: () => {
+      //Do nothing
+      console.log('Rejected')
+    }
+  })
+}
 </script>
 
 <template>
   <div class="w-full">
-    <div class="text-gray-700 flex my-4 pl-8 text-4xl font-semibold">
+    <div class="text-gray-700 flex my-4 p-8 text-4xl font-semibold">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -92,7 +121,7 @@ function filteredList() {
           <div class="md:flex justify-between">
             <div class="pt-2 relative text-gray-600">
               <input
-                class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                class="border-2 border-gray-300 w-full bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search"
@@ -130,15 +159,85 @@ function filteredList() {
         </template>
         <template #empty> No customers found. </template>
         <TableColumn field="id" header="ID" style="width: 5%"></TableColumn>
-        <TableColumn sortable field="name" header="Name" style="width: 30%"></TableColumn>
-        <TableColumn field="phone" header="Telephone" style="width: 30%"></TableColumn>
+        <TableColumn sortable field="name" header="Name" style="width: 25%"></TableColumn>
+        <TableColumn field="phone" header="Telephone" style="width: 25%"></TableColumn>
         <TableColumn
-          :class="`capitalize`"
-          field="type"
-          header="Type"
+          class="text-sm"
+          field="created_at"
+          header="Date Added"
           style="width: 20%"
         ></TableColumn>
-        <TableColumn field="created_at" header="Date Added" style="width: 30%"></TableColumn>
+        <!-- View, Edit and Delete -->
+        <TableColumn header="Actions" style="width: 20%" field="id">
+          <template #body="slotProps">
+            <div class="flex justify-start">
+              <button
+                class="flex items-center justify-center w-8 h-8 mr-0.5 text-lightblue transition-colors duration-150 cursor-pointer focus:outline-none hover:opacity-90"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 mt-0.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </button>
+              <RouterLink
+                :to="{ name: 'contact-edit', params: { id: slotProps.data.id } }"
+                class="flex items-center justify-center w-8 h-8 mr-1 text-darkblue transition-colors duration-150 cursor-pointer hover:opacity-90 focus:outline-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+              </RouterLink>
+              <div class="delete-wrapper">
+                <button
+                  @click="deleteContact($event, slotProps.data.id)"
+                  class="flex items-center justify-center w-8 h-8 mr-1 text-darkred transition-colors duration-150 cursor-pointer hover:text-gray-500 focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </template>
+        </TableColumn>
+        <ConfirmPopup></ConfirmPopup>
       </DataTable>
     </div>
   </div>

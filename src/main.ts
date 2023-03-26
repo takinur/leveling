@@ -4,6 +4,9 @@ import router from './router'
 import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
 import Ripple from 'primevue/ripple'
+import ConfirmationService from 'primevue/confirmationservice'
+import Toast from 'primevue/toast'
+import ToastService from 'primevue/toastservice'
 
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -13,6 +16,8 @@ import InputText from 'primevue/inputtext'
 import Checkbox from 'primevue/checkbox'
 import TieredMenu from 'primevue/tieredmenu'
 import Chart from 'primevue/chart'
+import ConfirmPopup from 'primevue/confirmpopup'
+import Menu from 'primevue/menu'
 
 import './assets/main.css'
 
@@ -24,6 +29,8 @@ const app = createApp(App)
 
 app.use(router)
 app.use(PrimeVue, { ripple: true })
+app.use(ConfirmationService)
+app.use(ToastService)
 
 app.directive('ripple', Ripple)
 
@@ -36,5 +43,8 @@ app.component('InputText', InputText)
 app.component('PrimeCheckbox', Checkbox)
 app.component('TieredMenu', TieredMenu)
 app.component('PrimeChart', Chart)
+app.component('ConfirmPopup', ConfirmPopup)
+app.component('PrimeMenu', Menu)
+app.component('ToastVue', Toast)
 
 app.mount('#app')
