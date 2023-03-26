@@ -106,8 +106,32 @@ contacts.value.forEach((contact) => {
   }
 })
 
+//Error message object for Validation
+const errorMessage = ref({
+  name: '',
+  email: '',
+  phone: ''
+})
+
 //Update form data
 const updateContact = () => {
+  //Validate Fields with Vuelidate
+  switch (true) {
+    case !contactData.value.name:
+      errorMessage.value.name = 'Name is required'
+      break
+    case !contactData.value.email:
+      errorMessage.value.email = 'Email is required'
+      break
+    case !contactData.value.phone:
+      errorMessage.value.phone = 'Phone is required'
+      break
+    default:
+      errorMessage.value.name = ''
+      errorMessage.value.email = ''
+      errorMessage.value.phone = ''
+  }
+
   console.log('Update Contact:', contactData.value)
   //TODO: Update contact in DB
   //Redirect to contacts page
@@ -144,25 +168,43 @@ const updateContact = () => {
       </div>
     </div>
 
-    <div class="w-full p-8 bg-white min-h-screen grid grid-flow-row md:grid-cols-5">
+    <div class="w-full p-8 bg-white min-h-screen md:grid md:grid-cols-5">
       <div class="sidenav">
         <h4 class="text-gray-600 text-base font-semibold">Contact Details</h4>
       </div>
-      <form class="col-span-2 md:pr-20">
+      <form class="col-span-2 md:pr-20 mt-4 md:mt-0">
         <div class="input-wrapper grid grid-flow-row">
           <label class="text-gray-600 font-medium" for="name">Name</label>
-          <InputText id="name" v-model="contactData.name" aria-describedby="name-help" />
+          <InputText
+            id="name"
+            v-model="contactData.name"
+            :class="{ 'p-invalid': errorMessage.name }"
+            aria-describedby="name-help"
+          />
+          <small class="p-error" id="text-error">{{ errorMessage.name || '&nbsp;' }}</small>
         </div>
         <div class="input-wrapper grid grid-flow-row mt-4">
           <label class="text-gray-600 font-medium" for="email">Email</label>
-          <InputText id="email" v-model="contactData.email" aria-describedby="email-help" />
+          <InputText
+            id="email"
+            :class="{ 'p-invalid': errorMessage.email }"
+            v-model="contactData.email"
+            aria-describedby="email-help"
+          />
+          <small class="p-error" id="text-error">{{ errorMessage.email || '&nbsp;' }}</small>
         </div>
         <div class="input-wrapper grid grid-flow-row mt-4">
           <label class="text-gray-600 font-medium" for="phone">Phone</label>
-          <InputText id="phone" v-model="contactData.phone" aria-describedby="phone-help" />
+          <InputText
+            id="phone"
+            v-model="contactData.phone"
+            aria-describedby="phone-help"
+            :class="{ 'p-invalid': errorMessage.phone }"
+          />
+          <small class="p-error" id="text-error">{{ errorMessage.phone || '&nbsp;' }}</small>
         </div>
       </form>
-      <div class="col-span-2 flex justify-center pt-4">
+      <div class="col-span-2 flex justify-center pt-4 mt-4 md:mt-0">
         <!-- Insight Card with Icon to show few Keywords -->
         <div class="w-64 h-52 rounded shadow-lg bg-darkblue">
           <div class="flex">
