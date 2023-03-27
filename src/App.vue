@@ -8,6 +8,7 @@ import HeaderNav from './components/HeaderNav.vue'
     <HeaderNav />
     <div class="main-body-wrapper">
       <RouterView />
+      <ToastVue />
     </div>
   </div>
 </template>
