@@ -235,5 +235,6 @@ const updateContact = () => {
         </div>
       </div>
     </div>
+    <ToastVue />
   </div>
 </template>
