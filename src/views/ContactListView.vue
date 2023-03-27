@@ -127,6 +127,39 @@ const errorMessage = ref({
   email: '',
   phone: ''
 })
+//Add New Contact
+const saveContact = () => {
+  //Validate form
+  if (contactData.value.name === '') {
+    errorMessage.value.name = 'Name is required'
+  } else {
+    errorMessage.value.name = ''
+  }
+  if (contactData.value.email === '') {
+    errorMessage.value.email = 'Email is required'
+  } else {
+    errorMessage.value.email = ''
+  }
+  if (contactData.value.phone === '') {
+    errorMessage.value.phone = 'Phone is required'
+  } else {
+    errorMessage.value.phone = ''
+  }
+
+  //If no error, save to Local Storage
+  if (
+    errorMessage.value.name === '' &&
+    errorMessage.value.email === '' &&
+    errorMessage.value.phone === ''
+  ) {
+    contactData.value.id = contacts.value.length + 1
+    contactData.value.created_at = new Date().toLocaleDateString()
+    contacts.value.push(contactData.value)
+    localStorage.setItem('contacts', JSON.stringify(contacts.value))
+    console.log('Saved', contactData.value)
+    showAddModal.value = false
+  }
+}
 </script>
 
 <template>
@@ -328,6 +361,7 @@ const errorMessage = ref({
         </div>
       </div>
     </DialogModal>
+    <!-- Add Contact Modal - Form -->
     <DialogModal
       v-model:visible="showAddModal"
       modal
@@ -371,7 +405,7 @@ const errorMessage = ref({
       </div>
       <template #footer>
         <PrimeButton label="Cancel" icon="pi pi-times" @click="showAddModal = false" text />
-        <PrimeButton label="Add" icon="pi pi-check" @click="showAddModal = false" autofocus />
+        <PrimeButton label="Add" icon="pi pi-check" @click="saveContact" autofocus />
       </template>
     </DialogModal>
   </div>
