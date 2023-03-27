@@ -9,6 +9,9 @@ const { id } = useRoute().params
 const toast = useToast()
 console.log('Edit This id:', id)
 
+//Start from top of Screen instead of scroll position
+window.scrollTo(0, 0)
+
 //More actions menu
 const actionMenu = ref()
 const menuItems = ref([
