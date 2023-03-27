@@ -269,9 +269,10 @@ function deleteContact(event: Event, id: number) {
           modal
           header="Contact Details"
           :style="{ width: '50vw' }"
+          :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
         >
           <div class="w-full">
-            <div class="w-full px-8 py-4 bg-darkblue text-primary grid grid-cols-3">
+            <div class="w-full px-8 py-4 bg-darkblue rounded text-primary grid grid-cols-3">
               <div class="font-semibold">
                 <h4 class="text-primary">Name:</h4>
                 <h4 class="text-primary mt-4">Email:</h4>
