@@ -52,44 +52,8 @@ const toggleActions = (event: Event) => {
   actionMenu.value.toggle(event)
 }
 
-//Temp data
-const contacts = ref([
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@mail.com',
-    phone: '555-555-5555',
-    created_at: '2020-Jan-01'
-  },
-  {
-    id: 2,
-    name: 'Karen Williams',
-    email: 'karen@mail.com',
-    phone: '444-444-4444',
-    created_at: '2021-Mar-07'
-  },
-  {
-    id: 3,
-    name: 'Henry Johnson',
-    email: 'henry@gmail.com',
-    phone: '333-333-3333',
-    created_at: '2023-May-09'
-  },
-  {
-    id: 4,
-    name: 'Sara Jackson',
-    email: 'sara@mail.com',
-    phone: '222-222-2222',
-    created_at: '2021-Apr-14'
-  },
-  {
-    id: 5,
-    name: 'Silverhand',
-    email: 'silver@cp.net',
-    phone: '111-111-1111',
-    created_at: '2022-Dec-30'
-  }
-])
+// Retrive Temp data from Local Storage
+const contacts = ref(JSON.parse(localStorage.getItem('contacts') || '[]'))
 
 //Form data
 const contactData = ref({
@@ -101,9 +65,21 @@ const contactData = ref({
 })
 
 //Set form data on load
-contacts.value.forEach((contact) => {
+contacts.value.forEach((contact: any) => {
   if (contact.id === Number(id)) {
     contactData.value = contact
+  } else {
+    //SHow error message if contact not found
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Contact not found',
+      life: 3000
+    })
+    //Redirect to contacts page after 3 seconds
+    //setTimeout(() => {
+    //  router.push('/contacts')
+    // }, 3000)
   }
 })
 
@@ -132,6 +108,15 @@ const updateContact = () => {
 
   console.log('Update Contact:', contactData.value)
   //TODO: Update contact in DB
+  contacts.value.forEach((contact: any) => {
+    if (contact.id === Number(id)) {
+      contact.name = contactData.value.name
+      contact.email = contactData.value.email
+      contact.phone = contactData.value.phone
+    }
+  })
+  //Update Local Storage
+  localStorage.setItem('contacts', JSON.stringify(contacts.value))
 
   toast.add({
     severity: 'success',

@@ -49,6 +49,13 @@ const contacts = ref([
   }
 ])
 
+//Store to Local Storage  to persist data
+if (localStorage.getItem('contacts') === null) {
+  localStorage.setItem('contacts', JSON.stringify(contacts.value))
+} else {
+  contacts.value = JSON.parse(localStorage.getItem('contacts') || '[]')
+}
+
 let searchInput = ref('')
 
 function filteredList() {
