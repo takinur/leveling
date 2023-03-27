@@ -95,42 +95,52 @@ const errorMessage = ref({
 
 //Update form data
 const updateContact = () => {
-  //Validate Fields with Vuelidate
-  if (!contactData.value.name) {
+  //Validate form
+  if (contactData.value.name === '') {
     errorMessage.value.name = 'Name is required'
-    return
+  } else {
+    errorMessage.value.name = ''
   }
-  if (!contactData.value.email) {
+  if (contactData.value.email === '') {
     errorMessage.value.email = 'Email is required'
-    return
+  } else {
+    errorMessage.value.email = ''
   }
-  if (!contactData.value.phone) {
+  if (contactData.value.phone === '') {
     errorMessage.value.phone = 'Phone is required'
-    return
+  } else {
+    errorMessage.value.phone = ''
   }
 
-  console.log('Update Contact:', contactData.value)
-  //TODO: Update contact in DB
-  contacts.value.forEach((contact: any) => {
-    if (contact.id === Number(id)) {
-      contact.name = contactData.value.name
-      contact.email = contactData.value.email
-      contact.phone = contactData.value.phone
-    }
-  })
-  //Update Local Storage for persistent
-  localStorage.setItem('contacts', JSON.stringify(contacts.value))
+  //If no error, Update contact
+  if (
+    errorMessage.value.name === '' &&
+    errorMessage.value.email === '' &&
+    errorMessage.value.phone === ''
+  ) {
+    console.log('Update Contact:', contactData.value)
+    //TODO: Update contact in DB
+    contacts.value.forEach((contact: any) => {
+      if (contact.id === Number(id)) {
+        contact.name = contactData.value.name
+        contact.email = contactData.value.email
+        contact.phone = contactData.value.phone
+      }
+    })
+    //Update Local Storage for persistent
+    localStorage.setItem('contacts', JSON.stringify(contacts.value))
 
-  toast.add({
-    severity: 'success',
-    summary: 'Updated',
-    detail: 'Contact Updated',
-    life: 3000
-  })
-  //Redirect to contacts page after 3 seconds
-  setTimeout(() => {
-    router.push('/contacts')
-  }, 3000)
+    toast.add({
+      severity: 'success',
+      summary: 'Updated',
+      detail: 'Contact Updated',
+      life: 3000
+    })
+    //Redirect to contacts page after 3 seconds
+    setTimeout(() => {
+      router.push('/contacts')
+    }, 3000)
+  }
 }
 </script>
 
