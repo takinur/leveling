@@ -2,8 +2,21 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
 
 const confirm = useConfirm()
+const toast = useToast()
+
+const showViewModal = ref(false)
+const showAddModal = ref(false)
+
+const viewContactDetails = ref({
+  id: 0,
+  name: '',
+  email: '',
+  phone: '',
+  created_at: ''
+})
 
 //Temp data
 const contacts = ref([
@@ -12,7 +25,6 @@ const contacts = ref([
     name: 'John Doe',
     email: 'john@mail.com',
     phone: '555-555-5555',
-    type: 'External',
     created_at: '2020-Jan-01'
   },
   {
@@ -20,7 +32,6 @@ const contacts = ref([
     name: 'Karen Williams',
     email: 'karen@mail.com',
     phone: '444-444-4444',
-    type: 'Internal',
     created_at: '2021-Mar-07'
   },
   {
@@ -28,7 +39,6 @@ const contacts = ref([
     name: 'Henry Johnson',
     email: 'henry@gmail.com',
     phone: '333-333-3333',
-    type: 'External',
     created_at: '2023-May-09'
   },
   {
@@ -36,7 +46,6 @@ const contacts = ref([
     name: 'Sara Jackson',
     email: 'sara@mail.com',
     phone: '222-222-2222',
-    type: 'Google',
     created_at: '2021-Apr-14'
   },
   {
@@ -44,13 +53,19 @@ const contacts = ref([
     name: 'Silverhand',
     email: 'silver@cp.net',
     phone: '111-111-1111',
-    type: 'Facebook',
     created_at: '2022-Dec-30'
   }
 ])
 
-let searchInput = ref('')
+//Store to Local Storage to persist data
+if (localStorage.getItem('contacts') === null) {
+  localStorage.setItem('contacts', JSON.stringify(contacts.value))
+} else {
+  contacts.value = JSON.parse(localStorage.getItem('contacts') || '[]')
+}
 
+//Search Contact
+let searchInput = ref('')
 function filteredList() {
   return contacts.value.filter((contact) => {
     //Name, Email and Phone
@@ -60,6 +75,14 @@ function filteredList() {
       contact.phone.toLowerCase().includes(searchInput.value.toLowerCase())
     )
   })
+}
+
+//View Contact Details
+function viewContact(event: Event, id: number) {
+  viewContactDetails.value = contacts.value.find(
+    (contact) => contact.id === id
+  ) as (typeof contacts.value)[0]
+  showViewModal.value = true
 }
 
 //Delete Contact
@@ -78,6 +101,12 @@ function deleteContact(event: Event, id: number) {
         contacts.value.findIndex((contact) => contact.id === id),
         1
       )
+      toast.add({
+        severity: 'info',
+        summary: 'Success',
+        detail: 'Contact Deleted Successfully',
+        life: 3000
+      })
       console.log('Deleted', id)
     },
     reject: () => {
@@ -85,6 +114,79 @@ function deleteContact(event: Event, id: number) {
       console.log('Rejected')
     }
   })
+}
+
+//Form data for New Contact
+const contactData = ref({
+  id: 0,
+  name: '',
+  email: '',
+  phone: '',
+  created_at: ''
+})
+//Error message object for Validation
+const errorMessage = ref({
+  name: '',
+  email: '',
+  phone: ''
+})
+//Add New Contact
+const saveContact = () => {
+  //Validate form
+  if (contactData.value.name === '') {
+    errorMessage.value.name = 'Name is required'
+  } else {
+    errorMessage.value.name = ''
+  }
+  if (contactData.value.email === '') {
+    errorMessage.value.email = 'Email is required'
+  } else {
+    errorMessage.value.email = ''
+  }
+  if (contactData.value.phone === '') {
+    errorMessage.value.phone = 'Phone is required'
+  } else {
+    errorMessage.value.phone = ''
+  }
+
+  //If no error, save to Local Storage
+  if (
+    errorMessage.value.name === '' &&
+    errorMessage.value.email === '' &&
+    errorMessage.value.phone === ''
+  ) {
+    contactData.value.id = contacts.value.length + 1
+    contactData.value.created_at = new Date().toLocaleDateString()
+    contacts.value.push(contactData.value)
+    localStorage.setItem('contacts', JSON.stringify(contacts.value))
+    console.log('Saved', contactData.value)
+    showAddModal.value = false
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Contact Added Successfully',
+      life: 3000
+    })
+  }
+}
+
+//Clear form data and error messages before opening modal
+const showForm = () => {
+  contactData.value = {
+    id: 0,
+    name: '',
+    email: '',
+    phone: '',
+    created_at: ''
+  }
+  //Clear error messages
+  errorMessage.value = {
+    name: '',
+    email: '',
+    phone: ''
+  }
+  //Open modal
+  showAddModal.value = true
 }
 </script>
 
@@ -150,6 +252,7 @@ function deleteContact(event: Event, id: number) {
             </div>
             <div class="w-48 mt-4 md:mt-0">
               <button
+                @click="showForm"
                 class="block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkblue rounded shadow ripple hover:shadow-lg hover:bg-opacity-80 focus:outline-none"
               >
                 Add a Contact
@@ -172,6 +275,7 @@ function deleteContact(event: Event, id: number) {
           <template #body="slotProps">
             <div class="flex justify-start">
               <button
+                @click="viewContact($event, slotProps.data.id)"
                 class="flex items-center justify-center w-8 h-8 mr-0.5 text-lightblue transition-colors duration-150 cursor-pointer focus:outline-none hover:opacity-90"
               >
                 <svg
@@ -238,8 +342,114 @@ function deleteContact(event: Event, id: number) {
           </template>
         </TableColumn>
         <ConfirmPopup></ConfirmPopup>
+        <DialogModal
+          v-model:visible="showViewModal"
+          modal
+          header="Contact Details"
+          :style="{ width: '50vw' }"
+          :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+        >
+          <div class="w-full">
+            <div class="w-full px-8 py-4 bg-darkblue rounded text-primary grid grid-cols-3">
+              <div class="font-semibold">
+                <h4 class="text-primary">Name:</h4>
+                <h4 class="text-primary mt-4">Email:</h4>
+                <h4 class="text-primary mt-4">Phone:</h4>
+              </div>
+
+              <div class="text-primary col-span-2 grid grid-flow-row">
+                <span class="">{{ viewContactDetails.name }}</span>
+                <span class="mt-4">{{ viewContactDetails.email }}</span>
+                <span class="mt-4">{{ viewContactDetails.phone }}</span>
+              </div>
+            </div>
+          </div>
+        </DialogModal>
       </DataTable>
     </div>
+    <!--  Contact Details Modal -->
+    <DialogModal
+      v-model:visible="showViewModal"
+      modal
+      header="Contact Details"
+      :style="{ width: '50vw' }"
+      :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+    >
+      <div class="w-full">
+        <div class="w-full px-8 py-4 bg-darkblue rounded text-primary grid grid-cols-3">
+          <div class="font-semibold">
+            <h4 class="text-primary">Name:</h4>
+            <h4 class="text-primary mt-4">Email:</h4>
+            <h4 class="text-primary mt-4">Phone:</h4>
+          </div>
+
+          <div class="text-primary col-span-2 grid grid-flow-row">
+            <span class="">{{ viewContactDetails.name }}</span>
+            <span class="mt-4">{{ viewContactDetails.email }}</span>
+            <span class="mt-4">{{ viewContactDetails.phone }}</span>
+          </div>
+        </div>
+      </div>
+    </DialogModal>
+    <!-- Add Contact Modal - Form -->
+    <DialogModal
+      v-model:visible="showAddModal"
+      modal
+      header="Add new contact"
+      :style="{ width: '35vw' }"
+      :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+    >
+      <div class="w-full">
+        <form class="col-span-2 px-4 mt-4 md:mt-0">
+          <div class="input-wrapper grid grid-flow-row">
+            <label class="text-gray-600 font-medium" for="name">Name</label>
+            <InputText
+              id="name"
+              v-model="contactData.name"
+              :class="{ 'p-invalid': errorMessage.name }"
+              aria-describedby="name-help"
+            />
+            <small class="p-error" id="text-error">{{ errorMessage.name || '&nbsp;' }}</small>
+          </div>
+          <div class="input-wrapper grid grid-flow-row mt-4">
+            <label class="text-gray-600 font-medium" for="email">Email</label>
+            <InputText
+              id="email"
+              :class="{ 'p-invalid': errorMessage.email }"
+              v-model="contactData.email"
+              aria-describedby="email-help"
+            />
+            <small class="p-error" id="text-error">{{ errorMessage.email || '&nbsp;' }}</small>
+          </div>
+          <div class="input-wrapper grid grid-flow-row mt-4">
+            <label class="text-gray-600 font-medium" for="phone">Phone</label>
+            <InputText
+              id="phone"
+              v-model="contactData.phone"
+              aria-describedby="phone-help"
+              :class="{ 'p-invalid': errorMessage.phone }"
+            />
+            <small class="p-error" id="text-error">{{ errorMessage.phone || '&nbsp;' }}</small>
+          </div>
+        </form>
+      </div>
+      <template #footer>
+        <button
+          class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkred rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none"
+          @click="showAddModal = false"
+        >
+          Cancel
+        </button>
+        <button
+          class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-lightblue rounded shadow ripple hover:shadow-lg hover:bg-sky-700 focus:outline-none"
+          @click="saveContact"
+          autofocus
+        >
+          Add
+        </button>
+      </template>
+    </DialogModal>
+    <ToastVue />
   </div>
 </template>
 
