@@ -15,7 +15,6 @@ const viewContactDetails = ref({
   name: '',
   email: '',
   phone: '',
-  type: '',
   created_at: ''
 })
 
