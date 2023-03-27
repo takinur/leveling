@@ -117,21 +117,19 @@ const errorMessage = ref({
 //Update form data
 const updateContact = () => {
   //Validate Fields with Vuelidate
-  switch (true) {
-    case !contactData.value.name:
-      errorMessage.value.name = 'Name is required'
-      break
-    case !contactData.value.email:
-      errorMessage.value.email = 'Email is required'
-      break
-    case !contactData.value.phone:
-      errorMessage.value.phone = 'Phone is required'
-      break
-    default:
-      errorMessage.value.name = ''
-      errorMessage.value.email = ''
-      errorMessage.value.phone = ''
+  if (!contactData.value.name) {
+    errorMessage.value.name = 'Name is required'
+    return
   }
+  if (!contactData.value.email) {
+    errorMessage.value.email = 'Email is required'
+    return
+  }
+  if (!contactData.value.phone) {
+    errorMessage.value.phone = 'Phone is required'
+    return
+  }
+
   console.log('Update Contact:', contactData.value)
   //TODO: Update contact in DB
 
