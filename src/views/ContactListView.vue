@@ -2,8 +2,11 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
 
 const confirm = useConfirm()
+const toast = useToast()
+
 const showViewModal = ref(false)
 const showAddModal = ref(false)
 
@@ -153,6 +156,12 @@ const saveContact = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts.value))
     console.log('Saved', contactData.value)
     showAddModal.value = false
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Contact Added Successfully',
+      life: 3000
+    })
   }
 }
 
