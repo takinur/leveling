@@ -2,10 +2,11 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
-// import ContactViewModal from '@/components/ContactViewModal.vue'
 
 const confirm = useConfirm()
 const showViewModal = ref(false)
+const showAddModal = ref(false)
+
 const viewContactDetails = ref({
   id: 0,
   name: '',
@@ -111,6 +112,21 @@ function deleteContact(event: Event, id: number) {
     }
   })
 }
+
+//Form data for New Contact
+const contactData = ref({
+  id: 0,
+  name: '',
+  email: '',
+  phone: '',
+  created_at: ''
+})
+//Error message object for Validation
+const errorMessage = ref({
+  name: '',
+  email: '',
+  phone: ''
+})
 </script>
 
 <template>
@@ -289,6 +305,75 @@ function deleteContact(event: Event, id: number) {
         </DialogModal>
       </DataTable>
     </div>
+    <DialogModal
+      v-model:visible="showViewModal"
+      modal
+      header="Contact Details"
+      :style="{ width: '50vw' }"
+      :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+    >
+      <div class="w-full">
+        <div class="w-full px-8 py-4 bg-darkblue rounded text-primary grid grid-cols-3">
+          <div class="font-semibold">
+            <h4 class="text-primary">Name:</h4>
+            <h4 class="text-primary mt-4">Email:</h4>
+            <h4 class="text-primary mt-4">Phone:</h4>
+          </div>
+
+          <div class="text-primary col-span-2 grid grid-flow-row">
+            <span class="">{{ viewContactDetails.name }}</span>
+            <span class="mt-4">{{ viewContactDetails.email }}</span>
+            <span class="mt-4">{{ viewContactDetails.phone }}</span>
+          </div>
+        </div>
+      </div>
+    </DialogModal>
+    <DialogModal
+      v-model:visible="showAddModal"
+      modal
+      header="Add new contact"
+      :style="{ width: '50vw' }"
+      :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+    >
+      <div class="w-full">
+        <form class="col-span-2 md:pr-20 mt-4 md:mt-0">
+          <div class="input-wrapper grid grid-flow-row">
+            <label class="text-gray-600 font-medium" for="name">Name</label>
+            <InputText
+              id="name"
+              v-model="contactData.name"
+              :class="{ 'p-invalid': errorMessage.name }"
+              aria-describedby="name-help"
+            />
+            <small class="p-error" id="text-error">{{ errorMessage.name || '&nbsp;' }}</small>
+          </div>
+          <div class="input-wrapper grid grid-flow-row mt-4">
+            <label class="text-gray-600 font-medium" for="email">Email</label>
+            <InputText
+              id="email"
+              :class="{ 'p-invalid': errorMessage.email }"
+              v-model="contactData.email"
+              aria-describedby="email-help"
+            />
+            <small class="p-error" id="text-error">{{ errorMessage.email || '&nbsp;' }}</small>
+          </div>
+          <div class="input-wrapper grid grid-flow-row mt-4">
+            <label class="text-gray-600 font-medium" for="phone">Phone</label>
+            <InputText
+              id="phone"
+              v-model="contactData.phone"
+              aria-describedby="phone-help"
+              :class="{ 'p-invalid': errorMessage.phone }"
+            />
+            <small class="p-error" id="text-error">{{ errorMessage.phone || '&nbsp;' }}</small>
+          </div>
+        </form>
+      </div>
+      <template #footer>
+        <PrimeButton label="Cancel" icon="pi pi-times" @click="showAddModal = false" text />
+        <PrimeButton label="Add" icon="pi pi-check" @click="showAddModal = false" autofocus />
+      </template>
+    </DialogModal>
   </div>
 </template>
 
