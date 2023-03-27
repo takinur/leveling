@@ -23,7 +23,6 @@ const contacts = ref([
     name: 'John Doe',
     email: 'john@mail.com',
     phone: '555-555-5555',
-    type: 'External',
     created_at: '2020-Jan-01'
   },
   {
@@ -31,7 +30,6 @@ const contacts = ref([
     name: 'Karen Williams',
     email: 'karen@mail.com',
     phone: '444-444-4444',
-    type: 'Internal',
     created_at: '2021-Mar-07'
   },
   {
@@ -39,7 +37,6 @@ const contacts = ref([
     name: 'Henry Johnson',
     email: 'henry@gmail.com',
     phone: '333-333-3333',
-    type: 'External',
     created_at: '2023-May-09'
   },
   {
@@ -47,7 +44,6 @@ const contacts = ref([
     name: 'Sara Jackson',
     email: 'sara@mail.com',
     phone: '222-222-2222',
-    type: 'Google',
     created_at: '2021-Apr-14'
   },
   {
@@ -55,7 +51,6 @@ const contacts = ref([
     name: 'Silverhand',
     email: 'silver@cp.net',
     phone: '111-111-1111',
-    type: 'Facebook',
     created_at: '2022-Dec-30'
   }
 ])
@@ -224,6 +219,7 @@ const saveContact = () => {
             </div>
             <div class="w-48 mt-4 md:mt-0">
               <button
+                @click="showAddModal = true"
                 class="block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkblue rounded shadow ripple hover:shadow-lg hover:bg-opacity-80 focus:outline-none"
               >
                 Add a Contact
@@ -370,7 +366,7 @@ const saveContact = () => {
       :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
     >
       <div class="w-full">
-        <form class="col-span-2 md:pr-20 mt-4 md:mt-0">
+        <form class="col-span-2 md:pr-20 pl-4 mt-4 md:mt-0">
           <div class="input-wrapper grid grid-flow-row">
             <label class="text-gray-600 font-medium" for="name">Name</label>
             <InputText
@@ -405,7 +401,13 @@ const saveContact = () => {
       </div>
       <template #footer>
         <PrimeButton label="Cancel" icon="pi pi-times" @click="showAddModal = false" text />
-        <PrimeButton label="Add" icon="pi pi-check" @click="saveContact" autofocus />
+        <PrimeButton
+          class="bg-darkblue"
+          label="Add"
+          icon="pi pi-check"
+          @click="saveContact"
+          autofocus
+        />
       </template>
     </DialogModal>
   </div>
