@@ -155,6 +155,25 @@ const saveContact = () => {
     showAddModal.value = false
   }
 }
+
+//Clear form data and error messages before opening modal
+const showForm = () => {
+  contactData.value = {
+    id: 0,
+    name: '',
+    email: '',
+    phone: '',
+    created_at: ''
+  }
+  //Clear error messages
+  errorMessage.value = {
+    name: '',
+    email: '',
+    phone: ''
+  }
+  //Open modal
+  showAddModal.value = true
+}
 </script>
 
 <template>
@@ -219,7 +238,7 @@ const saveContact = () => {
             </div>
             <div class="w-48 mt-4 md:mt-0">
               <button
-                @click="showAddModal = true"
+                @click="showForm"
                 class="block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkblue rounded shadow ripple hover:shadow-lg hover:bg-opacity-80 focus:outline-none"
               >
                 Add a Contact
@@ -362,11 +381,11 @@ const saveContact = () => {
       v-model:visible="showAddModal"
       modal
       header="Add new contact"
-      :style="{ width: '50vw' }"
+      :style="{ width: '35vw' }"
       :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
     >
       <div class="w-full">
-        <form class="col-span-2 md:pr-20 pl-4 mt-4 md:mt-0">
+        <form class="col-span-2 px-4 mt-4 md:mt-0">
           <div class="input-wrapper grid grid-flow-row">
             <label class="text-gray-600 font-medium" for="name">Name</label>
             <InputText
@@ -400,14 +419,19 @@ const saveContact = () => {
         </form>
       </div>
       <template #footer>
-        <PrimeButton label="Cancel" icon="pi pi-times" @click="showAddModal = false" text />
-        <PrimeButton
-          class="bg-darkblue"
-          label="Add"
-          icon="pi pi-check"
+        <button
+          class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkred rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none"
+          @click="showAddModal = false"
+        >
+          Cancel
+        </button>
+        <button
+          class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-lightblue rounded shadow ripple hover:shadow-lg hover:bg-teal-600 focus:outline-none"
           @click="saveContact"
           autofocus
-        />
+        >
+          Add
+        </button>
       </template>
     </DialogModal>
   </div>
