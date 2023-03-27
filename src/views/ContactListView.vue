@@ -368,6 +368,7 @@ const showForm = () => {
         </DialogModal>
       </DataTable>
     </div>
+    <!--  Contact Details Modal -->
     <DialogModal
       v-model:visible="showViewModal"
       modal
