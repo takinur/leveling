@@ -18,6 +18,7 @@ import TieredMenu from 'primevue/tieredmenu'
 import Chart from 'primevue/chart'
 import ConfirmPopup from 'primevue/confirmpopup'
 import Menu from 'primevue/menu'
+import Dialog from 'primevue/dialog'
 
 import './assets/main.css'
 
@@ -46,5 +47,6 @@ app.component('PrimeChart', Chart)
 app.component('ConfirmPopup', ConfirmPopup)
 app.component('PrimeMenu', Menu)
 app.component('ToastVue', Toast)
+app.component('DialogModal', Dialog)
 
 app.mount('#app')

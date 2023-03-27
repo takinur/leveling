@@ -115,7 +115,7 @@ const updateContact = () => {
       contact.phone = contactData.value.phone
     }
   })
-  //Update Local Storage
+  //Update Local Storage for persistent
   localStorage.setItem('contacts', JSON.stringify(contacts.value))
 
   toast.add({

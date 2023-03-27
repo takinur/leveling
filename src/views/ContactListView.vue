@@ -2,8 +2,18 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
+// import ContactViewModal from '@/components/ContactViewModal.vue'
 
 const confirm = useConfirm()
+const showViewModal = ref(false)
+const viewContactDetails = ref({
+  id: 0,
+  name: '',
+  email: '',
+  phone: '',
+  type: '',
+  created_at: ''
+})
 
 //Temp data
 const contacts = ref([
@@ -49,15 +59,15 @@ const contacts = ref([
   }
 ])
 
-//Store to Local Storage  to persist data
+//Store to Local Storage to persist data
 if (localStorage.getItem('contacts') === null) {
   localStorage.setItem('contacts', JSON.stringify(contacts.value))
 } else {
   contacts.value = JSON.parse(localStorage.getItem('contacts') || '[]')
 }
 
+//Search Contact
 let searchInput = ref('')
-
 function filteredList() {
   return contacts.value.filter((contact) => {
     //Name, Email and Phone
@@ -67,6 +77,14 @@ function filteredList() {
       contact.phone.toLowerCase().includes(searchInput.value.toLowerCase())
     )
   })
+}
+
+//View Contact Details
+function viewContact(event: Event, id: number) {
+  viewContactDetails.value = contacts.value.find(
+    (contact) => contact.id === id
+  ) as (typeof contacts.value)[0]
+  showViewModal.value = true
 }
 
 //Delete Contact
@@ -179,6 +197,7 @@ function deleteContact(event: Event, id: number) {
           <template #body="slotProps">
             <div class="flex justify-start">
               <button
+                @click="viewContact($event, slotProps.data.id)"
                 class="flex items-center justify-center w-8 h-8 mr-0.5 text-lightblue transition-colors duration-150 cursor-pointer focus:outline-none hover:opacity-90"
               >
                 <svg
@@ -245,6 +264,28 @@ function deleteContact(event: Event, id: number) {
           </template>
         </TableColumn>
         <ConfirmPopup></ConfirmPopup>
+        <DialogModal
+          v-model:visible="showViewModal"
+          modal
+          header="Contact Details"
+          :style="{ width: '50vw' }"
+        >
+          <div class="w-full">
+            <div class="w-full px-8 py-4 bg-darkblue text-primary grid grid-cols-3">
+              <div class="font-semibold">
+                <h4 class="text-primary">Name:</h4>
+                <h4 class="text-primary mt-4">Email:</h4>
+                <h4 class="text-primary mt-4">Phone:</h4>
+              </div>
+
+              <div class="text-primary col-span-2 grid grid-flow-row">
+                <span class="">{{ viewContactDetails.name }}</span>
+                <span class="mt-4">{{ viewContactDetails.email }}</span>
+                <span class="mt-4">{{ viewContactDetails.phone }}</span>
+              </div>
+            </div>
+          </div>
+        </DialogModal>
       </DataTable>
     </div>
   </div>
