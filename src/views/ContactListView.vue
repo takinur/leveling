@@ -102,6 +102,12 @@ function deleteContact(event: Event, id: number) {
         contacts.value.findIndex((contact) => contact.id === id),
         1
       )
+      toast.add({
+        severity: 'info',
+        summary: 'Success',
+        detail: 'Contact Deleted Successfully',
+        life: 3000
+      })
       console.log('Deleted', id)
     },
     reject: () => {
@@ -443,6 +449,7 @@ const showForm = () => {
         </button>
       </template>
     </DialogModal>
+    <ToastVue />
   </div>
 </template>
 
