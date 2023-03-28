@@ -19,6 +19,8 @@ import Chart from 'primevue/chart'
 import ConfirmPopup from 'primevue/confirmpopup'
 import Menu from 'primevue/menu'
 import Dialog from 'primevue/dialog'
+import AutoComplete from 'primevue/autocomplete'
+
 
 import './assets/main.css'
 
@@ -48,5 +50,7 @@ app.component('ConfirmPopup', ConfirmPopup)
 app.component('PrimeMenu', Menu)
 app.component('ToastVue', Toast)
 app.component('DialogModal', Dialog)
+app.component('AutoComplete', AutoComplete)
+
 
 app.mount('#app')
