@@ -46,6 +46,24 @@ const router = createRouter({
       meta: {
         title: 'Edit Group'
       }
+    },
+    //Create Offer View Route
+    {
+      path: '/offers/create',
+      name: 'offer-create',
+      component: () => import('../views/Offers/CreateView.vue'),
+      meta: {
+        title: 'Create Offer'
+      }
+    },
+    //Demo Component Route
+    {
+      path: '/demo',
+      name: 'demo',
+      component: () => import('../views/ComponentView.vue'),
+      meta: {
+        title: 'Demo'
+      }
     }
   ]
 })
