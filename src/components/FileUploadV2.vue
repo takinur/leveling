@@ -48,16 +48,12 @@ const uploadFiles = () => {
         </span>
       </div>
       <div class="mb-6 pt-4">
-        <div class="mb-5 mt-4 rounded-md bg-[#F5F7FB] py-4 px-8">
-          <div v-if="selectedFiles.length === 0" class="text-base font-medium text-[#666]">
-            Currently no file selected
-          </div>
-          <div
-            v-else
-            v-for="(file, index) in selectedFiles"
-            :key="index"
-            class="flex items-center justify-between"
-          >
+        <div
+          v-for="(file, index) in selectedFiles"
+          :key="index"
+          class="mb-5 mt-4 rounded-md bg-[#F5F7FB] py-4 px-8"
+        >
+          <div class="flex items-center justify-between">
             <span class="truncate pr-3 text-base font-medium text-[#07074D]">
               {{ file.name }}
             </span>
@@ -86,10 +82,10 @@ const uploadFiles = () => {
           </div>
         </div>
         <!-- Progress if Needed -->
-        <!-- <div class="rounded-md bg-[#F5F7FB] py-4 px-8">
+        <div class="rounded-md bg-[#F5F7FB] py-4 px-8">
           <div class="flex items-center justify-between">
             <span class="truncate pr-3 text-base font-medium text-[#07074D]"> Progress Demo </span>
-            <button class="text-[#07074D]">
+            <span class="text-[#07074D] cursor-pointer">
               <svg
                 width="10"
                 height="10"
@@ -110,12 +106,12 @@ const uploadFiles = () => {
                   fill="currentColor"
                 />
               </svg>
-            </button>
+            </span>
           </div>
           <div class="relative mt-5 h-[6px] w-full rounded-lg bg-[#E2E5EF]">
             <div class="absolute left-0 right-0 h-full w-[75%] rounded-lg bg-lightblue"></div>
           </div>
-        </div> -->
+        </div>
       </div>
 
       <div class="flex items-center justify-center w-full">
@@ -123,7 +119,9 @@ const uploadFiles = () => {
           for="offer-upload"
           class="flex flex-col items-center justify-center w-full h-12 text-teal-600 hover:text-teal-800 cursor-pointer"
         >
-          <span class="font-semibold">Add more files</span>
+          <span class="font-semibold">{{
+            selectedFiles.length > 0 ? 'Add more files' : 'Select file to upload'
+          }}</span>
 
           <input
             accept=".pdf,.jpg,.jpeg,.png"
@@ -137,7 +135,7 @@ const uploadFiles = () => {
     </form>
     <button
       @click.prevent="uploadFiles"
-      class="w-full py-4 bg-teal-700 hover:bg-teal-900 text-white font-semibold rounded-b-lg"
+      class="w-full py-4 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-b-lg"
     >
       Upload
     </button>
