@@ -4,7 +4,7 @@ import { validateForm } from './ValidateForm'
 
 const stepTitles = ['Basics', 'Agreement', 'Condition', 'Representation', 'Documents', 'Review']
 
-const currentStep = ref(0) //Change to 0 to start from first step
+const currentStep = ref(2) //Change to 0 to start from first step
 const formData = ref({
   name: '',
   title: '',
@@ -132,18 +132,23 @@ const contactSearch = (event: any) => {
 </script>
 
 <template>
-  <div class="w-full p-8">
-    Other things goes here
-    <div class="wrapper-wizard p-8 flex flex-initial bg-white shadow-xl rounded-lg mt-8 gap-2">
-      <aside class="min-h-screen w-1/3 grid justify-center">
-        <ul class="list-none mt-4">
+  <div class="w-full p-4 md:p-8">
+    <h1 class="text-2xl font-semibold text-gray-700">Create Offer</h1>
+    <span class="text-sm text-gray-500"
+      >You need to complete a series of Form to create a offer.
+    </span>
+    <div
+      class="wrapper-wizard pb-8 px-6 md:p-8 md:flex flex-initial bg-white shadow-xl rounded-lg mt-8 gap-2"
+    >
+      <aside class="md:min-h-screen w-full md:w-1/3 md:grid justify-center">
+        <div class="mt-4 flex flex-row md:flex-col flex-wrap md:justify-start">
           <li
             v-for="(stepTitle, index) in stepTitles"
             :key="index"
-            class="flex items-center mt-4 gap-4"
+            class="flex items-center ml-2 md:ml-0 mt-4 gap-4"
           >
             <span
-              class="w-10 h-10 text-xl font-semibold rounded flex items-center justify-center"
+              class="w-8 h-8 md:w-10 md:h-10 text-xl font-semibold rounded flex items-center justify-center"
               :class="
                 currentStep === index ? 'bg-darkblue text-white' : 'bg-gray-200 text-gray-600'
               "
@@ -163,48 +168,15 @@ const contactSearch = (event: any) => {
               </span>
               <span v-else>{{ index + 1 }}</span>
             </span>
-            <span class="font-semibold text-sm text-gray-700">{{ stepTitle }}</span>
+            <span class="font-semibold text-xs md:text-sm text-gray-700">{{ stepTitle }}</span>
           </li>
-        </ul>
+        </div>
       </aside>
-      <main class="w-2/3">
-        <form class="w-full" @submit.prevent="handleSubmit">
-          <div class="steps-wrapper min-h-[440px]">
-            <div class="basics-wrapper px-8" v-if="currentStep === 0">
-              <div class="input-wrapper grid grid-flow-row mt-4 md:w-1/2">
-                <label class="text-gray-600 font-semibold mb-1" for="buyers">Buyers</label>
-                <AutoComplete
-                  v-model="formData.buyers"
-                  dropdown
-                  multiple
-                  :suggestions="filteredContactItems"
-                  @complete="contactSearch"
-                  forceSelection
-                  option-label="name"
-                  placeholder="Search for Buyers"
-                  :class="{ 'p-invalid': errors.buyers }"
-                />
-                <small class="p-error" id="text-error">{{ errors.buyers || '&nbsp;' }}</small>
-              </div>
-              <div class="input-wrapper grid grid-flow-row mt-4 md:w-1/2">
-                <label class="text-gray-600 font-semibold mb-1" for="mls">MLS#</label>
-                <AutoComplete
-                  v-model="formData.mls"
-                  dropdown
-                  :suggestions="filteredContactItems"
-                  @complete="contactSearch"
-                  forceSelection
-                  option-label="name"
-                  placeholder="Type contact name"
-                  :class="{ 'p-invalid': errors.mls }"
-                />
-                <small class="p-error" id="text-error">{{ errors.mls || '&nbsp;' }}</small>
-              </div>
-            </div>
-            <div
-              class="agree-wrapper px-8 md:flex gap-6 justify-start"
-              v-else-if="currentStep === 1"
-            >
+      <main class="w-full md:w-2/3">
+        <form class="w-full pt-8" @submit.prevent="handleSubmit">
+          <div class="steps-wrapper min-h-[240px] md:min-h-[440px]">
+            <!-- Second Step / First Step at Bottom served as Default -->
+            <div class="agree-wrapper px-8 md:flex gap-6 justify-start" v-if="currentStep === 1">
               <div class="w-1/2">
                 <div class="input-wrapper grid grid-flow-row mt-4">
                   <label class="text-gray-600 font-semibold mb-1" for="buyers">Offer Date</label>
@@ -301,11 +273,46 @@ const contactSearch = (event: any) => {
                 </div>
               </div>
             </div>
-            <div v-else-if="currentStep === 2"><Condition /> Condition</div>
-            <div v-else-if="currentStep === 3"><Representation /> Representation</div>
-            <div v-else-if="currentStep === 4"><Documents /> Documents</div>
-            <div v-else-if="currentStep === 5"><Review /> Review</div>
-            <div v-else><Basics /> Basics</div>
+            <!-- Third Step -->
+            <div v-else-if="currentStep === 2">Condition</div>
+            <!-- Forth Step -->
+            <div v-else-if="currentStep === 3">Representation</div>
+            <!-- Fifth Step -->
+            <div v-else-if="currentStep === 4">Documents</div>
+            <!-- Sixth Step -->
+            <div v-else-if="currentStep === 5">Review</div>
+            <!-- Default Step / First Step -->
+            <div class="basics-wrapper px-8" v-if="currentStep === 0">
+              <div class="input-wrapper grid grid-flow-row mt-4 md:w-1/2">
+                <label class="text-gray-600 font-semibold mb-1" for="buyers">Buyers</label>
+                <AutoComplete
+                  v-model="formData.buyers"
+                  dropdown
+                  multiple
+                  :suggestions="filteredContactItems"
+                  @complete="contactSearch"
+                  forceSelection
+                  option-label="name"
+                  placeholder="Search for Buyers"
+                  :class="{ 'p-invalid': errors.buyers }"
+                />
+                <small class="p-error" id="text-error">{{ errors.buyers || '&nbsp;' }}</small>
+              </div>
+              <div class="input-wrapper grid grid-flow-row mt-4 md:w-1/2">
+                <label class="text-gray-600 font-semibold mb-1" for="mls">MLS#</label>
+                <AutoComplete
+                  v-model="formData.mls"
+                  dropdown
+                  :suggestions="filteredContactItems"
+                  @complete="contactSearch"
+                  forceSelection
+                  option-label="name"
+                  placeholder="Type contact name"
+                  :class="{ 'p-invalid': errors.mls }"
+                />
+                <small class="p-error" id="text-error">{{ errors.mls || '&nbsp;' }}</small>
+              </div>
+            </div>
           </div>
           <div class="button-wrapper flex justify-start w-full pl-4 mt-2">
             <button
