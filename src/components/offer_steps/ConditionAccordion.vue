@@ -8,8 +8,8 @@ const confirm = useConfirm()
 interface ConditionItem {
   id: number
   title: string
-  description: string
-  is_list: boolean
+  text: string
+  is_full_text: boolean
   attributes: {
     [key: string]: string
   }
@@ -20,8 +20,8 @@ const conditionItems = reactive<ConditionItem[]>([
   {
     id: 1,
     title: 'Condition Item 1',
-    description: 'List of Conditions, Condition 1, Condition 2, Condition 3',
-    is_list: true,
+    text: 'List of Conditions, Condition 1, Condition 2, Condition 3',
+    is_full_text: true,
     attributes: {
       salmon: 'Salmon Value',
       southeast: 'Yes',
@@ -32,15 +32,15 @@ const conditionItems = reactive<ConditionItem[]>([
   {
     id: 2,
     title: 'Condition Term 2',
-    description: 'Description for Condition Term 2',
-    is_list: false,
+    text: 'Description for Condition Term 2',
+    is_full_text: false,
     attributes: {}
   },
   {
     id: 3,
     title: 'Condition Term 3',
-    description: 'Some Vague Condition, List Items, Condition 1, Condition 2, Condition 3',
-    is_list: true,
+    text: 'Some Vague Condition, List Items, Condition 1, Condition 2, Condition 3',
+    is_full_text: true,
     attributes: {
       salmon: 'Salmon Value',
       southeast: 'Yes',
@@ -54,8 +54,8 @@ const conditionTemplates = ref([
   {
     id: 1,
     title: 'Template 1',
-    description: 'Description for Template 1',
-    is_list: false,
+    text: 'Description for Template 1',
+    is_full_text: false,
     attributes: {
       attr_1: 'Value 1',
       attr_2: 'Value 2',
@@ -66,8 +66,8 @@ const conditionTemplates = ref([
   {
     id: 2,
     title: 'Something that is really long and will wrap to the next line',
-    description: 'Condition 9, condition 6, condition 7',
-    is_list: true,
+    text: 'Condition 9, condition 6, condition 7',
+    is_full_text: true,
     attributes: {
       salmon: 'Salmon Value',
       southeast: 'Yes',
@@ -78,8 +78,8 @@ const conditionTemplates = ref([
   {
     id: 3,
     title: 'Template 3',
-    description: 'Description for Template 3',
-    is_list: false,
+    text: 'Description for Template 3',
+    is_full_text: false,
     attributes: {
       forward: 'Value 1',
       assimilated: 'Value 2',
@@ -90,8 +90,8 @@ const conditionTemplates = ref([
   {
     id: 9,
     title: 'Template for AD',
-    description: 'Description for Template for AD',
-    is_list: false,
+    text: 'Description for Template for AD',
+    is_full_text: false,
     attributes: {
       road: '03 Becker',
       watt: 'wattage',
@@ -107,8 +107,8 @@ const showTempMenu = ref(false)
 const editCondition = ref<ConditionItem>({
   id: 0,
   title: '',
-  description: '',
-  is_list: false,
+  text: '',
+  is_full_text: false,
   attributes: {}
 })
 
@@ -166,7 +166,7 @@ const filteredTemplates = () => {
   return conditionTemplates.value.filter((item) => {
     return (
       item.title.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchInput.value.toLowerCase())
+      item.text.toLowerCase().includes(searchInput.value.toLowerCase())
     )
   })
 }
@@ -210,13 +210,10 @@ defineExpose({
       <AccordionTab v-for="(item, index) in conditionItems" :key="index" :header="item.title">
         <ConfirmPopup></ConfirmPopup>
         <div class="condition-item">
-          <ul v-if="item.is_list === true" class="list-disc pl-8">
-            <li v-for="(row, index) in item.description.split(',')" :key="index">
-              {{ row.trim() }}
-            </li>
-          </ul>
-          <p v-else class="text-sm text-gray-500">{{ item.description }}</p>
-          <AttributeChip :attributes="item.attributes" />
+          <p v-if="item.is_full_text === true" class="text-sm text-gray-500">
+            {{ item.text }}
+          </p>
+          <AttributeChip v-else :attributes="item.attributes" />
         </div>
         <div class="flex justify-end w-full mt-2">
           <span class="p-buttonset">
@@ -289,12 +286,7 @@ defineExpose({
             <h4 class="text-gray-600 text-base font-semibold">{{ item.title }}</h4>
 
             <div class="mt-2">
-              <ul v-if="item.is_list === true" class="list-disc pl-8">
-                <li v-for="(row, index) in item.description.split(',')" :key="index">
-                  {{ row.trim() }}
-                </li>
-              </ul>
-              <p v-else class="text-sm text-gray-500">{{ item.description }}</p>
+              <p class="text-sm text-gray-500">{{ item.text }}</p>
             </div>
             <div class="template-contents flex justify-between my-4">
               <div class="attr-wrapper">
@@ -314,101 +306,74 @@ defineExpose({
       </div>
     </DialogModal>
     <!-- Edit Templates -->
-    <SidebarVue v-model:visible="showTempMenu" class="w-full condition-edit-menu" position="right">
-      <template #header>
-        <h2 class="text-gray-700 font-semibold text-2xl">Edit Condition template</h2>
-      </template>
-
-      <div class="w-full border border-gray-200 px-8 py-6 my-4 rounded-md">
-        <div class="flex flex-col w-full">
-          <label class="block text-sm font-medium text-gray-700">Title for Condition</label>
+    <DialogModal
+      v-model:visible="showTempMenu"
+      modal
+      header="Edit Condition"
+      :style="{ width: '50vw' }"
+      :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+    >
+      <div class="w-full pl-4 pr-8">
+        <div class="flex flex-row w-full items-center">
+          <label class="block w-2/3 md:w-1/3 md:text-lg font-semibold text-gray-600"
+            >Title of condition</label
+          >
           <input
             type="text"
-            class="w-full px-3 mt-2 py-2 text-sm leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
+            class="w-full px-3 mt-2 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none"
             v-model="editCondition.title"
           />
         </div>
-        <div class="pt-4 mt-2">
-          <div class="flex flex-col w-full">
-            <label class="block text-sm font-medium text-gray-700">Full text for Condition</label>
-            <textarea
-              class="w-full mt-2 px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
-              v-model="editCondition.description"
-            ></textarea>
-            <div class="mt-2 flex justify-start items-center">
-              <PrimeCheckbox v-model="editCondition.is_list" :binary="true" />
-              <span class="text-md text-gray-500 ml-1"
-                >Show as list
-                <span class="text-xs text-gray-500"> (separate by comma)</span>
-              </span>
+        <div class="text-gray-600 pt-4">
+          <h2 class="text-lg font-semibold">Attributes</h2>
+
+          <div class="border-2 rounded p-4 grid grid-cols-1 md:grid-cols-2 mt-2">
+            <div
+              v-for="(value, key) in editCondition.attributes"
+              :key="key"
+              class="md:inline-flex justify-between md:pr-8 py-1 items-center"
+            >
+              <label class="mr-2 text-sm text-gray-500 capitalize">{{ key }}</label>
+              <input
+                :disabled="editCondition.is_full_text"
+                v-model="tempAttributes[key]"
+                type="text"
+                class="p-1 text-sm w-32 border rounded disabled:bg-gray-200"
+              />
             </div>
           </div>
         </div>
-      </div>
-      <div class="w-full border border-gray-200 px-8 py-4 my-4 rounded-md">
-        <h2 class="text-base text-gray-600 font-semibold">Attributes</h2>
-        <div class="attributes-wrapper gap-2 grid grid-cols-1 md:grid-cols-2 mt-2">
-          <div
-            v-for="(value, key) in editCondition.attributes"
-            :key="key"
-            class="py-1 flex flex-col gap-1 items-start md:pr-4"
-          >
-            <label class="mr-2 text-base text-gray-600 capitalize">{{ key }}</label>
-            <input
-              v-model="tempAttributes[key]"
-              type="text"
-              class="p-1 px-2 text-sm w-full border rounded"
-            />
-          </div>
+        <div class="mt-2 flex justify-start items-center">
+          <PrimeCheckbox v-model="editCondition.is_full_text" :binary="true" />
+          <span class="text-md text-gray-500 ml-1">Edit the full text? </span>
         </div>
-      </div>
-      <div class="w-full border border-gray-200 px-8 py-4 my-4 rounded-md">
-        <h2 class="text-base text-gray-600 font-semibold">Preview</h2>
-        <div class="attributes-wrapper gap-2 grid grid-cols-1 md:grid-cols-2 mt-2">
-          <div class="condition-item mt-2">
-            <p class="text-lg text-gray-600">{{ editCondition.title }}</p>
-            <ul v-if="editCondition.is_list === true" class="list-disc pl-8">
-              <li v-for="(item, index) in editCondition.description.split(',')" :key="index">
-                {{ item.trim() }}
-              </li>
-            </ul>
-            <p v-else class="text-sm text-gray-500">{{ editCondition.description }}</p>
+        <div class="border-2 rounded flex flex-col mt-4 w-full">
+          <div v-if="!editCondition.is_full_text" class="w-full min-h-[164px] px-4 py-2">
             <AttributeChip :attributes="tempAttributes" />
           </div>
+          <textarea
+            v-else
+            :disabled="!editCondition.is_full_text"
+            class="w-full min-h-[164px] px-3 py-2 text-sm leading-tight text-gray-700 border rounded appearance-none focus:outline-none disabled:bg-gray-200"
+            v-model="editCondition.text"
+          />
         </div>
       </div>
-      <div class="flex items-center justify-center w-full gap-2">
+      <template #footer>
         <button
+          class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-darkred rounded shadow ripple hover:shadow-lg hover:bg-red-600 focus:outline-none"
           @click="showTempMenu = false"
-          type="button"
-          class="w-full py-3 px-4 text-base font-semibold text-gray-800 border-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
         >
           Cancel
         </button>
         <button
-          @click.prevent="handleUpdate"
-          type="button"
-          class="w-full py-3 px-4 text-base font-semibold text-white bg-gray-700 rounded hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
+          @click="handleUpdate"
+          class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-lightblue rounded shadow ripple hover:shadow-lg hover:bg-sky-700 focus:outline-none"
+          autofocus
         >
           Update
         </button>
-      </div>
-    </SidebarVue>
+      </template>
+    </DialogModal>
   </div>
 </template>
-
-<style>
-.p-sidebar-header {
-  justify-content: space-between !important;
-}
-
-.condition-edit-menu {
-  width: 32rem !important;
-}
-
-@media (max-width: 768px) {
-  .condition-edit-menu {
-    width: 70% !important;
-  }
-}
-</style>
